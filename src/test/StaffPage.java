@@ -211,7 +211,6 @@ public class StaffPage extends JFrame {
                     // Extract member name from the line
                     String[] parts = line.split(", ");
                     for (String part : parts) {
-						System.out.println("this is " + part);
                         setUserinfo(part);
                     }
                 }
