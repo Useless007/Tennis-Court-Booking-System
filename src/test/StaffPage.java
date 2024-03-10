@@ -107,7 +107,6 @@ public class StaffPage extends JFrame {
                     double price = calculatePrice(courtInfo);
                     getMemberName(memberId);
                     String memberName = getUserinfo();  // Get member name from ID
-                    String bookingInfo = "Member ID: " + memberId + "\nMember Name: " + memberName + "\nCourt Info: " + courtInfo + "\nPrice: " + price;
                     confirmBooking(memberId, courtInfo, price, memberName); // Confirm booking
                 } else {
                     JOptionPane.showMessageDialog(StaffPage.this, "Please select a court.", "Warning", JOptionPane.WARNING_MESSAGE);
