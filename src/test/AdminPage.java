@@ -23,7 +23,7 @@ public class AdminPage extends JFrame {
     DefaultListModel<String> courtListModel = new DefaultListModel<>();
     JList<String> courtList = new JList<>(courtListModel);
 
-    private long baseKey = 6606021420059L; // Default valuew
+    private long baseKey = 6606021420059L; // Default value
 
     public AdminPage() {
         displayUsers();
