@@ -14,13 +14,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class StaffPage extends JFrame {
-
+    
     private JPanel contentPane;
     private JTextField memberIdTextField;
     private JTextField bookingTextField;
     private JTextField priceTextField;
     private JList<String> userList;
     private JList<String> courtList;
+
+    private String UserInfo;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -102,8 +104,9 @@ public class StaffPage extends JFrame {
                 String memberId = memberIdTextField.getText(); // Get Member ID from TextField
                 String courtInfo = courtList.getSelectedValue(); // Get selected court info from JList
                 if (courtInfo != null) {
-                    double price = calculatePrice(courtInfo); // Calculate price
-                    String memberName = getMemberName(memberId); // Get member name from ID
+                    double price = calculatePrice(courtInfo);
+                    getMemberName(memberId);
+                    String memberName = getUserinfo();  // Get member name from ID
                     String bookingInfo = "Member ID: " + memberId + "\nMember Name: " + memberName + "\nCourt Info: " + courtInfo + "\nPrice: " + price;
                     confirmBooking(memberId, courtInfo, price, memberName); // Confirm booking
                 } else {
@@ -200,24 +203,23 @@ public class StaffPage extends JFrame {
         return 0.0;
     }
 
-    private String getMemberName(String memberId) {
+    private void getMemberName(String memberId) {
         try {
             List<String> bookingLines = Files.readAllLines(Paths.get("courtbooking.txt"));
-            for (String line : bookingLines) {
+			for (String line : bookingLines) {
                 if (line.contains("Member ID: " + memberId)) {
                     // Extract member name from the line
                     String[] parts = line.split(", ");
                     for (String part : parts) {
-                        if (part.startsWith("Member Name: ")) {
-                            return part.substring("Member Name: ".length());
-                        }
+						System.out.println("this is " + part);
+                        setUserinfo(part);
                     }
                 }
             }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return "Unknown"; // Return "Unknown" if member name not found
+        // return "Unknown"; // Return "Unknown" if member name not found
     }
 
 
@@ -263,4 +265,14 @@ public class StaffPage extends JFrame {
         }
         courtList.setModel(courtListModel);
     }
+
+    private void setUserinfo(String userinfo) {
+        this.UserInfo = userinfo;
+    }
+
+    private String getUserinfo() {
+        return this.UserInfo;
+    }
+
+    
 }
