@@ -101,8 +101,14 @@ public class StaffPage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String memberId = memberIdTextField.getText(); // Get Member ID from TextField
                 String courtInfo = courtList.getSelectedValue(); // Get selected court info from JList
-                double price = calculatePrice(courtInfo); // Calculate price
-                confirmBooking(memberId, courtInfo, price); // Confirm booking
+                if (courtInfo != null) {
+                    double price = calculatePrice(courtInfo); // Calculate price
+                    String memberName = getMemberName(memberId); // Get member name from ID
+                    String bookingInfo = "Member ID: " + memberId + "\nMember Name: " + memberName + "\nCourt Info: " + courtInfo + "\nPrice: " + price;
+                    confirmBooking(memberId, courtInfo, price, memberName); // Confirm booking
+                } else {
+                    JOptionPane.showMessageDialog(StaffPage.this, "Please select a court.", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
         btnConfirmBooking.setBounds(259, 45, 147, 23);
@@ -122,8 +128,12 @@ public class StaffPage extends JFrame {
         btnCalculatePrice.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String courtInfo = courtList.getSelectedValue(); // Get selected court info from JList
-                double price = calculatePrice(courtInfo); // Calculate price
-                priceTextField.setText(String.valueOf(price)); // Display price
+                if (courtInfo != null) {
+                    double price = calculatePrice(courtInfo); // Calculate price
+                    priceTextField.setText(String.valueOf(price)); // Display price
+                } else {
+                    JOptionPane.showMessageDialog(StaffPage.this, "Please select a court.", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
         btnCalculatePrice.setBounds(259, 85, 147, 23);
@@ -141,13 +151,12 @@ public class StaffPage extends JFrame {
         courtListPane.setBounds(320, 174, 258, 148);
         contentPane.add(courtListPane);
 
-        // Add mouse listener to user list for single clicks
         userList.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() == 1) {
-                    // Handle single click event
                     String selectedUser = userList.getSelectedValue();
+
                     if (selectedUser != null) {
                         String[] parts = selectedUser.split(", ");
                         if (parts.length >= 3) {
@@ -161,8 +170,25 @@ public class StaffPage extends JFrame {
             }
         });
 
-        // Call displayUsers and displayCourts method to initially display user and
-        // court list
+        courtList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent event) {
+                if (event.getClickCount() == 1) {
+                    String selectedCourt = courtList.getSelectedValue();
+                    if (selectedCourt != null) {
+                        String[] parts = selectedCourt.split(", ");
+                        if (parts.length >= 2) {
+                            String name = parts[0];
+                            String price = parts[1];
+
+                            // Show data in the input field
+                            bookingTextField.setText(name + " " + price); // Add price to bookingTextField
+                        }
+                    }
+                }
+            }
+        });
+
         displayUsers();
         displayCourts();
     }
@@ -174,16 +200,32 @@ public class StaffPage extends JFrame {
         return 0.0;
     }
 
-    private void confirmBooking(String memberId, String courtInfo, double price) {
-        // This method confirms the booking and stores the booking information in the
-        // courtbooking.txt file
-        // You should add the code to write the booking information to the file here
-        // Here, we just show a message dialog for testing purposes
-        String bookingInfo = "Member ID: " + memberId + "\nCourt Info: " + courtInfo + "\nPrice: " + price;
+    private String getMemberName(String memberId) {
+        try {
+            List<String> bookingLines = Files.readAllLines(Paths.get("courtbooking.txt"));
+            for (String line : bookingLines) {
+                if (line.contains("Member ID: " + memberId)) {
+                    // Extract member name from the line
+                    String[] parts = line.split(", ");
+                    for (String part : parts) {
+                        if (part.startsWith("Member Name: ")) {
+                            return part.substring("Member Name: ".length());
+                        }
+                    }
+                }
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return "Unknown"; // Return "Unknown" if member name not found
+    }
+
+
+    private void confirmBooking(String memberId, String courtInfo, double price, String memberName) {
+        String bookingInfo = "Member ID: " + memberId + "\nMember Name: " + memberName + "\nCourt Info: " + courtInfo + "\nPrice: " + price;
         JOptionPane.showMessageDialog(this, "Booking confirmed!\n" + bookingInfo, "Confirmation",
                 JOptionPane.INFORMATION_MESSAGE);
 
-        // Write the booking information to the file
         try {
             FileWriter writer = new FileWriter("courtbooking.txt", true);
             writer.write(bookingInfo);
