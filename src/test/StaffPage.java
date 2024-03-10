@@ -13,7 +13,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
 public class StaffPage extends JFrame {
 
     private JPanel contentPane;
@@ -97,7 +96,6 @@ public class StaffPage extends JFrame {
         contentPane.add(bookingTextField);
         bookingTextField.setColumns(10);
 
-        
         JButton btnConfirmBooking = new JButton("Confirm Booking");
         btnConfirmBooking.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -151,16 +149,20 @@ public class StaffPage extends JFrame {
                     // Handle single click event
                     String selectedUser = userList.getSelectedValue();
                     if (selectedUser != null) {
-                        String[] parts = selectedUser.split(":");
-                        if (parts.length > 0) {
-                            memberIdTextField.setText(parts[0].trim());
+                        String[] parts = selectedUser.split(", ");
+                        if (parts.length >= 3) {
+                            String selectedMemberId = parts[0].trim();
+                            String selectedName = parts[1].trim();
+                            String selectedSurname = parts[2].trim();
+                            memberIdTextField.setText(selectedMemberId + ", " + selectedName + " " + selectedSurname);
                         }
                     }
                 }
             }
         });
 
-        // Call displayUsers and displayCourts method to initially display user and court list
+        // Call displayUsers and displayCourts method to initially display user and
+        // court list
         displayUsers();
         displayCourts();
     }
@@ -173,11 +175,13 @@ public class StaffPage extends JFrame {
     }
 
     private void confirmBooking(String memberId, String courtInfo, double price) {
-        // This method confirms the booking and stores the booking information in the courtbooking.txt file
+        // This method confirms the booking and stores the booking information in the
+        // courtbooking.txt file
         // You should add the code to write the booking information to the file here
         // Here, we just show a message dialog for testing purposes
         String bookingInfo = "Member ID: " + memberId + "\nCourt Info: " + courtInfo + "\nPrice: " + price;
-        JOptionPane.showMessageDialog(this, "Booking confirmed!\n" + bookingInfo, "Confirmation", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Booking confirmed!\n" + bookingInfo, "Confirmation",
+                JOptionPane.INFORMATION_MESSAGE);
 
         // Write the booking information to the file
         try {
