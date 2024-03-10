@@ -10,6 +10,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import javax.swing.border.EmptyBorder;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 
 public class StaffPage extends JFrame {
 
@@ -94,6 +97,7 @@ public class StaffPage extends JFrame {
         contentPane.add(bookingTextField);
         bookingTextField.setColumns(10);
 
+        
         JButton btnConfirmBooking = new JButton("Confirm Booking");
         btnConfirmBooking.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -138,6 +142,23 @@ public class StaffPage extends JFrame {
         JScrollPane courtListPane = new JScrollPane(courtList);
         courtListPane.setBounds(320, 174, 258, 148);
         contentPane.add(courtListPane);
+
+        // Add mouse listener to user list for single clicks
+        userList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                if (evt.getClickCount() == 1) {
+                    // Handle single click event
+                    String selectedUser = userList.getSelectedValue();
+                    if (selectedUser != null) {
+                        String[] parts = selectedUser.split(":");
+                        if (parts.length > 0) {
+                            memberIdTextField.setText(parts[0].trim());
+                        }
+                    }
+                }
+            }
+        });
 
         // Call displayUsers and displayCourts method to initially display user and court list
         displayUsers();

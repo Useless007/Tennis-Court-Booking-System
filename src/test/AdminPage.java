@@ -134,11 +134,12 @@ public class AdminPage extends JFrame {
         remUser.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = userList.getSelectedIndex();
-                if (selectedIndex != -1 && showConfirmationDialog("Are you sure you want to delete this user?", "Confirm Deletion")) {
+                if (selectedIndex != -1
+                        && showConfirmationDialog("Are you sure you want to delete this user?", "Confirm Deletion")) {
                     removeItemFromList(userlistModel, "user.txt", selectedIndex);
                 }
             }
-        });        
+        });
 
         editUser.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -404,8 +405,40 @@ public class AdminPage extends JFrame {
         }
     }
 
+    private void updateUserPromotions() {
+        LocalDate today = LocalDate.now();
+        try {
+            List<String> lines = Files.readAllLines(Paths.get("user.txt"));
+            List<String> updatedLines = new ArrayList<>();
+
+            for (String line : lines) {
+                String[] details = line.split(", ");
+                LocalDate dateRegistry = LocalDate.parse(details[3]);
+                long daysBetween = ChronoUnit.DAYS.between(dateRegistry, today);
+
+                if (daysBetween > 7) {
+                    // Change the promotion status to "0" if the registration was more than 7 days
+                    // ago
+                    details[4] = "0";
+                }else{
+                    details[4] = "1";
+                }
+                // Reconstruct the line with updated details
+                String updatedLine = String.join(", ", details);
+                updatedLines.add(updatedLine);
+            }
+
+            // Overwrite the user.txt file with the updated lines
+            Files.write(Paths.get("user.txt"), updatedLines);
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     private void displayUsers() {
         purgeOldUsers(); // Call the method to purge old users before displaying the list
+        updateUserPromotions();
         userlistModel.clear();
         try {
             List<String> lines = Files.readAllLines(Paths.get("user.txt"));
