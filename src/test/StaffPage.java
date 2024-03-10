@@ -22,7 +22,6 @@ public class StaffPage extends JFrame {
 	private JList<String> userList;
 	private JList<String> courtList;
 
-	private String UserInfo;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -60,7 +59,6 @@ public class StaffPage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String memberId = memberIdTextField.getText();
 				DefaultListModel<String> userlistModel = new DefaultListModel<>();
-				DefaultListModel<String> courtListModel = new DefaultListModel<>();
 
 				try {
 					List<String> userLines = Files.readAllLines(Paths.get("user.txt"));
@@ -70,20 +68,15 @@ public class StaffPage extends JFrame {
 						}
 					}
 
-					List<String> courtLines = Files.readAllLines(Paths.get("courtList.txt"));
-					for (String line : courtLines) {
-						if (line.contains(memberId)) {
-							courtListModel.addElement(line);
-						}
-					}
+					
 				} catch (IOException ex) {
 					ex.printStackTrace();
 					userlistModel.addElement("Error reading user file");
-					courtListModel.addElement("Error reading court file");
+					
 				}
 
 				userList.setModel(userlistModel);
-				courtList.setModel(courtListModel);
+				
 			}
 		});
 		btnSearch.setBounds(259, 7, 89, 23);
