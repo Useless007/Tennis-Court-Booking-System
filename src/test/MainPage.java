@@ -15,7 +15,7 @@ public class MainPage extends JFrame {
 	private JPanel contentPane;
 
 	/********************************************
-	 * 			Launch the application.			*
+	 * Launch the application. *
 	 ********************************************/
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -29,19 +29,17 @@ public class MainPage extends JFrame {
 			}
 		});
 	}
+
 	/********************************************
-	 * 				end of main					*
+	 * end of main *
 	 ********************************************/
-
-
-
 
 	/**
 	 * Create the frame.
 	 */
 	public MainPage() {
 		setResizable(false);
-		setTitle("Select some shit"); 
+		setTitle("Select some shit");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 358);
 		contentPane = new JPanel();
@@ -49,29 +47,37 @@ public class MainPage extends JFrame {
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JButton btnAdmin = new JButton("Admin");
 		btnAdmin.setBounds(10, 11, 414, 66);
 		contentPane.add(btnAdmin);
-		
+
 		JButton btnStaff = new JButton("Staff");
 		btnStaff.setBounds(10, 88, 414, 66);
 		contentPane.add(btnStaff);
-		
+
 		JButton btnOwner = new JButton("Owner");
 		btnOwner.setBounds(10, 165, 414, 66);
 		contentPane.add(btnOwner);
-		
+
 		JButton btnOwner_1 = new JButton("Promotion View");
 		btnOwner_1.setBounds(10, 242, 414, 66);
 		contentPane.add(btnOwner_1);
 
+		// ActionListener for the "Staff" button
+		btnStaff.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				StaffPage staffPage = new StaffPage(); // Create the new JFrame
+				staffPage.setVisible(true); // Show the new window
+			}
+		});
 
+		// ActionListener for the "Admin" button
 		btnAdmin.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        AdminPage adminPage = new AdminPage(); // Create the new JFrame
-		        adminPage.setVisible(true); // Show the new window
-		    }
+			public void actionPerformed(ActionEvent e) {
+				AdminPage adminPage = new AdminPage(); // Create the new JFrame
+				adminPage.setVisible(true); // Show the new window
+			}
 		});
 	}
 }
