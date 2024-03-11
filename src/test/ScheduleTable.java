@@ -4,17 +4,23 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class ScheduleTable extends JFrame {
+    ScheduleMethod scheduleMethod = new ScheduleMethod();
 
     private final Color clickedColor = Color.YELLOW;
     private final Set<Point> clickedCells = new HashSet<>();
     private final Map<Integer, Set<String>> selectedTimesPerDay = new HashMap<>();
     private String[] days = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+
+    private String DaysandHoursStrings;
+    private int SumOfDays;
 
     public ScheduleTable() {
         // Set up the frame
@@ -39,7 +45,8 @@ public class ScheduleTable extends JFrame {
 
         for (String day : days) {
             model.addRow(new Object[] { day });
-            selectedTimesPerDay.put(model.getRowCount() - 1, new HashSet<>());
+            selectedTimesPerDay.put(model.getRowCount() - 1, new TreeSet<>(timeComparator));
+
         }
 
         JTable table = new JTable(model);
@@ -114,17 +121,58 @@ public class ScheduleTable extends JFrame {
         Set<String> selectedTimes = selectedTimesPerDay.get(row);
         if (!selectedTimes.isEmpty()) {
             StringBuilder timesBuilder = new StringBuilder();
-            timesBuilder.append("Selected times for ").append(days[row]).append(": [");
+            timesBuilder.append(days[row]).append(": [");
             String delimiter = "";
             for (String time : selectedTimes) {
                 timesBuilder.append(delimiter).append(time);
                 delimiter = ", ";
             }
             timesBuilder.append("]");
-            System.out.println(timesBuilder);
+
+            setDaysandHoursStrings(timesBuilder.toString()); // Days and hours strings
+            System.out.println(getDaysandHoursStrings());
+            scheduleMethod.setDaysandHoursStrings(timesBuilder.toString());
 
             int totalHours = calculateTotalHours(selectedTimes);
-            System.out.println("Total hours selected for " + days[row] + ": " + totalHours);
+            // System.out.println(totalHours); // total hours
+            setSumofDays(totalHours); // Sum of days
+            System.out.println(getSumofDays());
+
         }
     }
-}
+
+    Comparator<String> timeComparator = new Comparator<String>() {
+        @Override
+        public int compare(String time1, String time2) {
+            String[] parts1 = time1.split(" - ")[0].split(":");
+            String[] parts2 = time2.split(" - ")[0].split(":");
+            int hour1 = Integer.parseInt(parts1[0]);
+            int minute1 = Integer.parseInt(parts1[1]);
+            int hour2 = Integer.parseInt(parts2[0]);
+            int minute2 = Integer.parseInt(parts2[1]);
+
+            if (hour1 != hour2) {
+                return hour1 - hour2;
+            } else {
+                return minute1 - minute2;
+            }
+        }
+    };
+
+    private void setDaysandHoursStrings(String n) {
+        this.DaysandHoursStrings = n;
+    }
+
+    public String getDaysandHoursStrings() {
+        return this.DaysandHoursStrings;
+    }
+
+    private void setSumofDays(int days) {
+        this.SumOfDays = days;
+    }
+
+    public int getSumofDays() {
+        return this.SumOfDays;
+    }
+
+};

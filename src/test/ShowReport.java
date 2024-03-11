@@ -43,7 +43,6 @@ public class ShowReport extends JDialog {
     }
 
     private String fetchPurchaseAmount(String memberId) {
-        // Implement logic to fetch the purchase amount per transaction for a given member ID
-        return "0"; // Placeholder, replace with actual logic
+        return "0";
     }
 }
