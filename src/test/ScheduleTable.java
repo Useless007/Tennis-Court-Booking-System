@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
-import java.util.Comparator;
 
 public class ScheduleTable extends JFrame {
 
@@ -100,12 +98,6 @@ public class ScheduleTable extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new ScheduleTable());
     }
-
-    private Comparator<String> timeComparator = (time1, time2) -> {
-        int hour1 = Integer.parseInt(time1.split(":")[0]);
-        int hour2 = Integer.parseInt(time2.split(":")[0]);
-        return Integer.compare(hour1, hour2);
-    };
 
     private int calculateTotalHours(Set<String> selectedTimes) {
         int totalHours = 0;
