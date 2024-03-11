@@ -60,9 +60,9 @@ public class MainPage extends JFrame {
 		btnOwner.setBounds(10, 165, 414, 66);
 		contentPane.add(btnOwner);
 
-		JButton btnOwner_1 = new JButton("Promotion View");
-		btnOwner_1.setBounds(10, 242, 414, 66);
-		contentPane.add(btnOwner_1);
+		JButton btnShowpromo = new JButton("Promotion View");
+		btnShowpromo.setBounds(10, 242, 414, 66);
+		contentPane.add(btnShowpromo);
 
 		// ActionListener for the "Staff" button
 		btnStaff.addActionListener(new ActionListener() {
@@ -77,6 +77,14 @@ public class MainPage extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				AdminPage adminPage = new AdminPage(); // Create the new JFrame
 				adminPage.setVisible(true); // Show the new window
+			}
+		});
+
+		// ActionListener for the "Show Promotion" button
+		btnShowpromo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ShowPromotion Promo = new ShowPromotion();
+				Promo.setVisible(true);
 			}
 		});
 	}
