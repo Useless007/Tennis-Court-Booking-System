@@ -64,6 +64,14 @@ public class MainPage extends JFrame {
 		btnOwner_1.setBounds(10, 242, 414, 66);
 		contentPane.add(btnOwner_1);
 
+		// ActionListener for the "Owner" button
+		btnOwner.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				OwnerPage OwnerPage = new OwnerPage(); // Create the new JFrame
+				OwnerPage.setVisible(true); // Show the new window
+			}
+		});
+
 		// ActionListener for the "Staff" button
 		btnStaff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
