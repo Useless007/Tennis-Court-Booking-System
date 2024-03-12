@@ -95,28 +95,6 @@ public class StaffPage extends JFrame {
 		bookingTextField.setColumns(10);
 
         JButton btnConfirmBooking = new JButton("Confirm Booking");
-        btnConfirmBooking.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String inputText = memberIdTextField.getText();
-                String[] parts = inputText.split(", ");
-                String memberId = parts.length > 0 ? parts[0].trim() : ""; // แยกและเลือก memberId
-                String userName = parts.length > 1 ? parts[1].trim() : ""; // เพิ่มส่วนนี้เพื่อรับชื่อผู้ใช้
-
-                if (memberId.isEmpty() || userName.isEmpty()) {
-                    JOptionPane.showMessageDialog(StaffPage.this, "Please select a user.", "Warning", JOptionPane.WARNING_MESSAGE);
-                    return; // หยุดการทำงานเพื่อป้องกันการดำเนินการต่อ
-                }
-
-                String courtInfo = courtList.getSelectedValue();
-                if (courtInfo != null) {
-                    double price = calculatePrice(courtInfo);
-                    System.out.println(userName);
-                    confirmBooking(memberId, userName, courtInfo, price); // ใช้ memberId ที่แยกได้
-                } else {
-                    JOptionPane.showMessageDialog(StaffPage.this, "Please select a court.", "Warning", JOptionPane.WARNING_MESSAGE);
-                }
-            }
-        });
         btnConfirmBooking.setBounds(411, 45, 147, 23);
         contentPane.add(btnConfirmBooking);
 

@@ -108,7 +108,7 @@ public class ScheduleTable extends JFrame {
                     table.repaint();
                 }
             }
-        });
+        );
 
         add(new JScrollPane(table));
         setVisible(true);
