@@ -17,7 +17,7 @@ public class ScheduleTable extends JFrame {
     private final Color clickedColor = Color.YELLOW;
     private final Set<Point> clickedCells = new HashSet<>();
     private final Map<Integer, Set<String>> selectedTimesPerDay = new HashMap<>();
-    private String[] days = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+    private String[] days = {  "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"  };
 
     private String DaysandHoursStrings;
     private int SumOfDays;
@@ -59,6 +59,7 @@ public class ScheduleTable extends JFrame {
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                   
                     boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 if (column > 0 && clickedCells.contains(new Point(row, column))) {
@@ -92,7 +93,18 @@ public class ScheduleTable extends JFrame {
                         }
                     }
                     // Print and repaint as before
+                        selectedTimesPerDay.get(row).add(times[col]);
+                    }
+                    // Clear selections in other rows
+                    for (final int[] r = new int[1]; r[0] < table.getRowCount(); r[0]++) {
+                        if (r[0] != row) {
+                            clickedCells.removeIf(p -> p.x == r[0]);
+                            selectedTimesPerDay.get(r[0]).clear();
+                        }
+                    }
+                    // Print and repaint as before
                     printSelectedTimesAndTotalHours(row);
+                    table.repaint();
                     table.repaint();
                 }
             }
