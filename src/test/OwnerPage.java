@@ -22,6 +22,7 @@ public class OwnerPage extends JFrame {
     }
 
     public OwnerPage() {
+        setResizable(false);
         setTitle("Owner Page");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 600, 600); // Increased size of the window

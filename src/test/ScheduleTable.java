@@ -10,6 +10,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ScheduleTable extends JFrame {
     ScheduleMethod scheduleMethod = new ScheduleMethod();
@@ -24,10 +26,10 @@ public class ScheduleTable extends JFrame {
 
     public ScheduleTable() {
         // Set up the frame
+        setResizable(false);
         setTitle("Schedule Table");
-        setSize(1200, 300);
+        setSize(1200, 379);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         // Data for days and times
         String[] times = new String[14];
@@ -109,8 +111,19 @@ public class ScheduleTable extends JFrame {
                 }
             }
         );
+        getContentPane().setLayout(null);
 
-        add(new JScrollPane(table));
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(0, 0, 1184, 323);
+        getContentPane().add(scrollPane);
+        
+        JButton btnNewButton = new JButton("New button");
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
+        btnNewButton.setBounds(0, 321, 1184, 23);
+        getContentPane().add(btnNewButton);
         setVisible(true);
     }
 
