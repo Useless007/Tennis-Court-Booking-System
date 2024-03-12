@@ -1,4 +1,12 @@
 Member ID: 6606021420075
 Member Name: asd adad
-Court Info: Batminton1, 120, 100
+Court Info: Batminton2, 120, 100
 Price: 0.0
+Date Booking: Wednesday
+Time: [9:00 - 10:00, 10:00 - 11:00, 11:00 - 12:00]
+Member ID: 6606021420075
+Member Name: asd adad
+Court Info: Batminton2, 120, 100
+Price: 0.0
+Date Booking: Tuesday
+Time: [6:00 - 7:00, 7:00 - 8:00]
