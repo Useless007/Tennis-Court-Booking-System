@@ -14,18 +14,22 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class StaffPage extends JFrame {
+	ScheduleMethod scheduleMethod = new ScheduleMethod();
 
-    private JPanel contentPane;
-    private JTextField memberIdTextField;
-    private JTextField bookingTextField;
-    private JTextField priceTextField;
-    private JList<String> userList;
-    private JList<String> courtList;
+	private JPanel contentPane;
+	private JTextField memberIdTextField;
+	private JTextField bookingTextField;
+	private JTextField priceTextField;
+	private JList<String> userList;
+	private JList<String> courtList;
+	// ScheduleTable scheduleTable = new ScheduleTable();
+	
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
+					
                     StaffPage frame = new StaffPage();
                     frame.setVisible(true);
                 } catch (Exception e) {
@@ -36,6 +40,7 @@ public class StaffPage extends JFrame {
     }
 
     public StaffPage() {
+		// scheduleTable.setVisible(false);
         setTitle("Staff Page");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 600, 600); // Adjust frame size as needed
@@ -48,10 +53,10 @@ public class StaffPage extends JFrame {
         lblMemberId.setBounds(10, 11, 83, 14);
         contentPane.add(lblMemberId);
 
-        memberIdTextField = new JTextField();
-        memberIdTextField.setBounds(103, 8, 146, 20);
-        contentPane.add(memberIdTextField);
-        memberIdTextField.setColumns(10);
+		memberIdTextField = new JTextField();
+		memberIdTextField.setBounds(103, 8, 298, 20);
+		contentPane.add(memberIdTextField);
+		memberIdTextField.setColumns(10);
 
         JButton btnSearch = new JButton("Search");
         btnSearch.addActionListener(new ActionListener() {
@@ -77,42 +82,20 @@ public class StaffPage extends JFrame {
 
             }
         });
-        btnSearch.setBounds(259, 7, 89, 23);
+        btnSearch.setBounds(411, 7, 147, 23);
         contentPane.add(btnSearch);
 
         JLabel lblBooking = new JLabel("Booking:");
         lblBooking.setBounds(10, 49, 83, 14);
         contentPane.add(lblBooking);
 
-        bookingTextField = new JTextField();
-        bookingTextField.setBounds(103, 46, 146, 20);
-        contentPane.add(bookingTextField);
-        bookingTextField.setColumns(10);
+		bookingTextField = new JTextField();
+		bookingTextField.setBounds(103, 46, 298, 20);
+		contentPane.add(bookingTextField);
+		bookingTextField.setColumns(10);
 
         JButton btnConfirmBooking = new JButton("Confirm Booking");
-        btnConfirmBooking.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String inputText = memberIdTextField.getText();
-                String[] parts = inputText.split(", ");
-                String memberId = parts.length > 0 ? parts[0].trim() : ""; // แยกและเลือก memberId
-                String userName = parts.length > 1 ? parts[1].trim() : ""; // เพิ่มส่วนนี้เพื่อรับชื่อผู้ใช้
-
-                if (memberId.isEmpty() || userName.isEmpty()) {
-                    JOptionPane.showMessageDialog(StaffPage.this, "Please select a user.", "Warning", JOptionPane.WARNING_MESSAGE);
-                    return; // หยุดการทำงานเพื่อป้องกันการดำเนินการต่อ
-                }
-
-                String courtInfo = courtList.getSelectedValue();
-                if (courtInfo != null) {
-                    double price = calculatePrice(courtInfo);
-                    System.out.println(userName);
-                    confirmBooking(memberId, userName, courtInfo, price); // ใช้ memberId ที่แยกได้
-                } else {
-                    JOptionPane.showMessageDialog(StaffPage.this, "Please select a court.", "Warning", JOptionPane.WARNING_MESSAGE);
-                }
-            }
-        });
-        btnConfirmBooking.setBounds(259, 45, 147, 23);
+        btnConfirmBooking.setBounds(411, 45, 147, 23);
         contentPane.add(btnConfirmBooking);
 
         JLabel lblPrice = new JLabel("Price:");
@@ -121,7 +104,7 @@ public class StaffPage extends JFrame {
 
         priceTextField = new JTextField();
         priceTextField.setEditable(false);
-        priceTextField.setBounds(103, 86, 146, 20);
+        priceTextField.setBounds(103, 86, 298, 20);
         contentPane.add(priceTextField);
         priceTextField.setColumns(10);
 
@@ -138,7 +121,7 @@ public class StaffPage extends JFrame {
                 }
             }
         });
-        btnCalculatePrice.setBounds(259, 85, 147, 23);
+        btnCalculatePrice.setBounds(411, 79, 147, 23);
         contentPane.add(btnCalculatePrice);
 
         DefaultListModel<String> userlistModel = new DefaultListModel<>();
@@ -147,11 +130,17 @@ public class StaffPage extends JFrame {
         userlistPane.setBounds(32, 174, 258, 148);
         contentPane.add(userlistPane);
 
-        DefaultListModel<String> courtListModel = new DefaultListModel<>();
-        courtList = new JList<>(courtListModel);
-        JScrollPane courtListPane = new JScrollPane(courtList);
-        courtListPane.setBounds(320, 174, 258, 148);
-        contentPane.add(courtListPane);
+		DefaultListModel<String> courtListModel = new DefaultListModel<>();
+		courtList = new JList<>(courtListModel);
+		JScrollPane courtListPane = new JScrollPane(courtList);
+		courtListPane.setBounds(300, 174, 258, 148);
+		contentPane.add(courtListPane);
+
+		JButton btnSelectTime = new JButton("Select Time To Booking");
+		btnSelectTime.setBounds(32, 119, 526, 44);
+		contentPane.add(btnSelectTime);
+
+		
 
         userList.addMouseListener(new MouseAdapter() {
             @Override
@@ -183,13 +172,107 @@ public class StaffPage extends JFrame {
                             String name = parts[0];
                             String price = parts[1];
 
-                            // Show data in the input field
-                            bookingTextField.setText(name + " " + price); // Add price to bookingTextField
-                        }
-                    }
+							// Show data in the input field
+							bookingTextField.setText(name + " " + price); // Add price to bookingTextField
+						}
+					}
+				}
+			}
+		});
+
+		btnSelectTime.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ScheduleTable s = new ScheduleTable();
+				s.setVisible(true);
+			}
+		});
+
+		btnCalculatePrice.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String courtInfo = courtList.getSelectedValue(); // Get selected court info from JList
+				if (courtInfo != null) {
+					double price = calculatePrice(courtInfo); // Calculate price
+					priceTextField.setText(String.valueOf(price)); // Display price
+				} else {
+					JOptionPane.showMessageDialog(StaffPage.this, "Please select a court.", "Warning",
+							JOptionPane.WARNING_MESSAGE);
+				}
+			}
+		});
+
+		btnConfirmBooking.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String inputText = memberIdTextField.getText();
+				
+				if (inputText.length() == 0) {
+                    JOptionPane.showMessageDialog(StaffPage.this, "Please select a member.", "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+							return;
                 }
-            }
-        });
+
+				String[] parts = inputText.split(", ");
+				String memberId = parts.length > 0 ? parts[0].trim() : ""; // แยกและเลือก memberId
+				String userName = parts[1].trim();
+				// System.out.println("Member ID: " + memberId);
+				// System.out.println(1);
+				
+				
+
+				String courtInfo = courtList.getSelectedValue();
+				if (courtInfo != null) {
+					double price = 0;
+					
+					/**
+					 * price รอใส่ function คำนวน
+					 * String DaysandHoursStrings = [6:00 - 7:00, 11:00 - 12:00, 18:00 - 19:00] Selected times for Tuesday: [6:00 - 7:00, 11:00 - 12:00, 18:00 - 19:00]
+					 * SumofDays = (3) Total hours selected for Tuesday: 3
+					 * 
+					 * getDaysandHoursStrings()
+					 * getSumofDays()
+					 * 
+					 */
+						
+						System.out.println(scheduleMethod.getDaysandHoursStrings());
+						// System.out.println(scheduleTable.getDaysandHoursStrings());
+						// System.out.println(scheduleTable.getSumofDays());
+					
+
+					/**
+					 * memberId, userName, courtInfo , price
+					 */
+
+					confirmBooking(memberId, userName, courtInfo, price); // ใช้ memberId ที่แยกได้
+				} else {
+					JOptionPane.showMessageDialog(StaffPage.this, "Please select a court.", "Warning",
+							JOptionPane.WARNING_MESSAGE);
+				}
+			
+			}
+		});
+
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String memberId = memberIdTextField.getText();
+				DefaultListModel<String> userlistModel = new DefaultListModel<>();
+
+				try {
+					List<String> userLines = Files.readAllLines(Paths.get("user.txt"));
+					for (String line : userLines) {
+						if (line.contains(memberId)) {
+							userlistModel.addElement(line);
+						}
+					}
+
+				} catch (IOException ex) {
+					ex.printStackTrace();
+					userlistModel.addElement("Error reading user file");
+
+				}
+
+				userList.setModel(userlistModel);
+
+			}
+		});
 
         displayUsers();
         displayCourts();
@@ -216,9 +299,9 @@ public class StaffPage extends JFrame {
         return 0.0;
     }
 
-    private void confirmBooking(String memberId, String userName, String courtInfo, double price) {
-        String bookingInfo = "Member ID: " + memberId + "\nMember Name: " + userName + "\nCourt Info: " + courtInfo
-                + "\nPrice: " + price;
+	private void confirmBooking(String memberId, String userName, String courtInfo, double price) {
+		String bookingInfo = "Member ID: " + memberId + "\nMember Name: " + userName + "\nCourt Info: " + courtInfo
+				+ "\nPrice: " + price ;
 
         JOptionPane.showMessageDialog(this, "Booking confirmed!\n" + bookingInfo, "Confirmation",
                 JOptionPane.INFORMATION_MESSAGE);
