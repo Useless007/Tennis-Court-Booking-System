@@ -23,6 +23,18 @@ public class StaffPage extends JFrame {
 	private JList<String> userList;
 	private JList<String> courtList;
 	// ScheduleTable scheduleTable = new ScheduleTable();
+    ScheduleMethod ss = new ScheduleMethod();
+
+    public void receiveScheduleData(String daysAndHours, int sumOfDays, String DaysandHoursStrings) {
+        // Handle the data here, e.g., update the UI or store the data
+        
+        System.out.println("Received scheduling data: " + daysAndHours + ", " + sumOfDays + ", " + DaysandHoursStrings);
+
+        priceTextField.setText(String.valueOf(daysAndHours));
+
+        // You can update text fields or other UI components here
+    }
+    
 	
 
     public static void main(String[] args) {
@@ -181,11 +193,12 @@ public class StaffPage extends JFrame {
 		});
 
 		btnSelectTime.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ScheduleTable s = new ScheduleTable();
-				s.setVisible(true);
-			}
-		});
+            public void actionPerformed(ActionEvent e) {
+                ScheduleTable s = new ScheduleTable(StaffPage.this);
+                s.setVisible(true);
+            }
+        });
+        
 
 		btnCalculatePrice.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

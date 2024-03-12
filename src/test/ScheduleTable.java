@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 
 public class ScheduleTable extends JFrame {
     ScheduleMethod scheduleMethod = new ScheduleMethod();
-
+    private StaffPage staffPage;
     private final Color clickedColor = Color.YELLOW;
     private final Set<Point> clickedCells = new HashSet<>();
     private final Map<Integer, Set<String>> selectedTimesPerDay = new HashMap<>();
@@ -23,7 +23,8 @@ public class ScheduleTable extends JFrame {
 
     private String dayString = "";
 
-    public ScheduleTable() {
+    public ScheduleTable(StaffPage staffPage) {
+        this.staffPage = staffPage;
         // Set up the frame
         setResizable(false);
         setTitle("Schedule Table");
@@ -119,11 +120,16 @@ public class ScheduleTable extends JFrame {
         JButton btnBen10 = new JButton("Selection Time Pick");
 
         btnBen10.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-                System.out.println(scheduleMethod.getDaysandHoursStrings());
-        	}
+            public void actionPerformed(ActionEvent e) {
+                if (staffPage != null) {
+                    staffPage.receiveScheduleData(scheduleMethod.getDayOfWeekStrings(),
+                                                  scheduleMethod.getSumofDays(),
+                                                  scheduleMethod.getDaysandHoursStrings());
+                    dispose();
+                }
+            }
         });
-
+        
         
 
         btnBen10.setBounds(0, 321, 1184, 23);
@@ -131,9 +137,6 @@ public class ScheduleTable extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new ScheduleTable());
-    }
 
     private int calculateTotalHours(Set<String> selectedTimes) {
         int totalHours = 0;
@@ -159,11 +162,12 @@ public class ScheduleTable extends JFrame {
             timesBuilder.append("]");
 
             String dateString = timesBuilder.toString();
-            
-            scheduleMethod.setDaysandHoursStrings(days[row]);
+
+
+            scheduleMethod.setDayOfWeekStrings(days[row]);
+            scheduleMethod.setDaysandHoursStrings(dateString);
 
             int totalHours = calculateTotalHours(selectedTimes);
-
             scheduleMethod.setSumofDays(totalHours); // Sum of days
             
 

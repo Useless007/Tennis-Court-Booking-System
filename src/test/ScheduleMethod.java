@@ -15,6 +15,11 @@ public class ScheduleMethod {
         return this.DaysandHoursStrings;
     }
 
+    public String getHourstString(String DaysandHoursStrings) {
+        String day = DaysandHoursStrings;
+        return day;
+    }
+
     public void setSumofDays(int days) {
         this.SumOfDays = days;
     }
