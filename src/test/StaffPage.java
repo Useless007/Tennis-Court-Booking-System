@@ -25,6 +25,9 @@ public class StaffPage extends JFrame {
     public String DayOfWeek;
     public int SumOfHour;
     public String DaysandHoursStrings;
+    public String normalPrice;
+    public String weekendPrice;
+    public int totalPrice;
     // ScheduleTable scheduleTable = new ScheduleTable();
     ScheduleMethod ss = new ScheduleMethod();
 
@@ -217,14 +220,21 @@ public class StaffPage extends JFrame {
 
         btnCalculatePrice.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String courtInfo = courtList.getSelectedValue(); // Get selected court info from JList
-                if (courtInfo != null) {
-                    double price = calculatePrice(courtInfo); // Calculate price
-                    priceTextField.setText(String.valueOf(price)); // Display price
-                } else {
-                    JOptionPane.showMessageDialog(StaffPage.this, "Please select a court.", "Warning",
-                            JOptionPane.WARNING_MESSAGE);
+                
+                if (DayOfWeek.equals("Monday") || DayOfWeek.equals("Tuesday") || DayOfWeek.equals("Wednesday") || DayOfWeek.equals("Thursday") || DayOfWeek.equals("Friday")){
+                    System.out.println("normal day");
+                    System.out.println(SumOfHour);
+                    System.out.println(normalPrice);
+                    
+                    // Integer num = Integer.parseInt(normalPrice);
+                    // totalPrice = num * SumOfHour;
+                    // System.out.println(totalPrice);
+                } 
+                else{
+                    System.out.println("weekends day");
+                    System.out.println(weekendPrice);
                 }
+
             }
         });
 
@@ -245,12 +255,17 @@ public class StaffPage extends JFrame {
                 // System.out.println(1);
 
                 String courtInfo = courtList.getSelectedValue();
+                String[] courtPrice = courtInfo.split(", ");
+                normalPrice = courtPrice.length > 1 ? courtPrice[1].trim() : "";
+                weekendPrice = courtPrice[2].trim();
+
                 if (courtInfo != null) {
                     double price = 0;
 
                     confirmBooking(memberId, userName, courtInfo, price, DayOfWeek, DaysandHoursStrings); // ใช้
                                                                                                           // memberId
                                                                                                           // ที่แยกได้
+                    
                 } else {
                     JOptionPane.showMessageDialog(StaffPage.this, "Please select a court.", "Warning",
                             JOptionPane.WARNING_MESSAGE);
