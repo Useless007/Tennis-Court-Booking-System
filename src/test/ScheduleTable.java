@@ -21,8 +21,7 @@ public class ScheduleTable extends JFrame {
     private final Map<Integer, Set<String>> selectedTimesPerDay = new HashMap<>();
     private String[] days = {  "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"  };
 
-    private String DaysandHoursStrings;
-    private int SumOfDays;
+    private String dayString = "";
 
     public ScheduleTable() {
         // Set up the frame
@@ -121,10 +120,11 @@ public class ScheduleTable extends JFrame {
 
         btnBen10.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-                //ตรงนี้ฮัฟฟังชั่นปุ่ม
+                System.out.println(scheduleMethod.getDaysandHoursStrings());
         	}
         });
 
+        
 
         btnBen10.setBounds(0, 321, 1184, 23);
         getContentPane().add(btnBen10);
@@ -158,14 +158,14 @@ public class ScheduleTable extends JFrame {
             }
             timesBuilder.append("]");
 
-            setDaysandHoursStrings(timesBuilder.toString()); // Days and hours strings
-            System.out.println(getDaysandHoursStrings());
-            scheduleMethod.setDaysandHoursStrings(timesBuilder.toString());
+            String dateString = timesBuilder.toString();
+            
+            scheduleMethod.setDaysandHoursStrings(days[row]);
 
             int totalHours = calculateTotalHours(selectedTimes);
-            // System.out.println(totalHours); // total hours
-            setSumofDays(totalHours); // Sum of days
-            System.out.println(getSumofDays());
+
+            scheduleMethod.setSumofDays(totalHours); // Sum of days
+            
 
         }
     }
@@ -188,20 +188,6 @@ public class ScheduleTable extends JFrame {
         }
     };
 
-    private void setDaysandHoursStrings(String n) {
-        this.DaysandHoursStrings = n;
-    }
-
-    public String getDaysandHoursStrings() {
-        return this.DaysandHoursStrings;
-    }
-
-    private void setSumofDays(int days) {
-        this.SumOfDays = days;
-    }
-
-    public int getSumofDays() {
-        return this.SumOfDays;
-    }
+    
 
 };
