@@ -117,13 +117,17 @@ public class ScheduleTable extends JFrame {
         scrollPane.setBounds(0, 0, 1184, 323);
         getContentPane().add(scrollPane);
         
-        JButton btnNewButton = new JButton("New button");
-        btnNewButton.addActionListener(new ActionListener() {
+        JButton btnBen10 = new JButton("Selection Time Pick");
+
+        btnBen10.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+                //ตรงนี้ฮัฟฟังชั่นปุ่ม
         	}
         });
-        btnNewButton.setBounds(0, 321, 1184, 23);
-        getContentPane().add(btnNewButton);
+
+
+        btnBen10.setBounds(0, 321, 1184, 23);
+        getContentPane().add(btnBen10);
         setVisible(true);
     }
 
