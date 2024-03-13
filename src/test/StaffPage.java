@@ -230,41 +230,6 @@ public class StaffPage extends JFrame {
             }
         });
 
-        btnConfirmBooking.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                String inputText = memberIdTextField.getText();
-                String courtInfo = courtList.getSelectedValue();
-
-                if (inputText.length() == 0) {
-                    JOptionPane.showMessageDialog(StaffPage.this, "Please select a member.", "Warning",
-                            JOptionPane.WARNING_MESSAGE);
-                    return;
-                } else if (courtInfo == null) {
-                    JOptionPane.showMessageDialog(StaffPage.this, "Please select a court.", "Warning",
-                            JOptionPane.WARNING_MESSAGE);
-                } else if (DayOfWeek == null) {
-                    JOptionPane.showMessageDialog(StaffPage.this, "Please select a time to booking.", "Warning",
-                            JOptionPane.WARNING_MESSAGE);
-                    return;
-                } else if (price == 0) {
-                    System.out.println("price 0");
-                }
-
-                String[] parts = inputText.split(", ");
-                String memberId = parts.length > 0 ? parts[0].trim() : ""; // แยกและเลือก memberId
-                String userName = parts[1].trim();
-
-                if (courtInfo != null) {
-
-                    confirmBooking(memberId, userName, courtInfo, price, DayOfWeek, DaysandHoursStrings); // ใช้
-                                                                                                          // memberId
-                                                                                                          // ที่แยกได้
-
-                }
-            }
-        });
-
         btnSearch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String memberId = memberIdTextField.getText();

@@ -28,3 +28,15 @@ Court Info: Batminton2, 120, 100
 Price: 240.0
 Date Booking: Monday
 Time: [7:00 - 8:00, 8:00 - 9:00]
+Member ID: 6606021420084
+Member Name: Hee Men
+Court Info: Batminton1, 120, 100
+Price: 360.0
+Date Booking: Monday
+Time: [10:00 - 11:00, 11:00 - 12:00, 12:00 - 13:00]
+Member ID: 6606021420084
+Member Name: Hee Men
+Court Info: Batminton2, 120, 100
+Price: 480.0
+Date Booking: Monday
+Time: [8:00 - 9:00, 9:00 - 10:00, 10:00 - 11:00, 11:00 - 12:00]
