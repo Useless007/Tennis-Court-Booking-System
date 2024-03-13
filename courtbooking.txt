@@ -10,3 +10,21 @@ Court Info: Batminton1, 120, 100
 Price: 240.0
 Date Booking: Monday
 Time: [7:00 - 8:00, 8:00 - 9:00]
+Member ID: 6606021420075
+Member Name: asd adad
+Court Info: Batminton2, 120, 100
+Price: 360.0
+Date Booking: Monday
+Time: [7:00 - 8:00, 8:00 - 9:00, 9:00 - 10:00]
+Member ID: 6606021420075
+Member Name: asd adad
+Court Info: Batminton2, 120, 100
+Price: 360.0
+Date Booking: Monday
+Time: [6:00 - 7:00, 7:00 - 8:00, 8:00 - 9:00]
+Member ID: 6606021420075
+Member Name: asd adad
+Court Info: Batminton2, 120, 100
+Price: 240.0
+Date Booking: Monday
+Time: [7:00 - 8:00, 8:00 - 9:00]

@@ -29,8 +29,11 @@ public class StaffPage extends JFrame {
     public String weekendPrice;
     public int totalPrice;
     public int price = 0;
+
+
+
+    
     // ScheduleTable scheduleTable = new ScheduleTable();
-    ScheduleMethod ss = new ScheduleMethod();
 
     public void receiveScheduleData(String daysAndHours, int sumOfDays, String DaysandHoursStrings) {
         // Handle the data here, e.g., update the UI or store the data
@@ -45,6 +48,7 @@ public class StaffPage extends JFrame {
         }
         // System.out.println("Received scheduling data: " + daysAndHours + ", " +
         // sumOfDays + ", " + DaysandHoursStrings);
+
         priceTextField.setText(String.valueOf("Please Click the Calculate Price button to calculate"));
 
         // You can update text fields or other UI components here
@@ -208,8 +212,9 @@ public class StaffPage extends JFrame {
 
                 Integer normalPrice = Integer.parseInt(nPrice);
                 Integer weekendPrice = Integer.parseInt(wPrice);
-                
-                if (DayOfWeek.equals("Monday") || DayOfWeek.equals("Tuesday") || DayOfWeek.equals("Wednesday") || DayOfWeek.equals("Thursday") || DayOfWeek.equals("Friday")){
+
+                if (DayOfWeek.equals("Monday") || DayOfWeek.equals("Tuesday") || DayOfWeek.equals("Wednesday")
+                        || DayOfWeek.equals("Thursday") || DayOfWeek.equals("Friday")) {
                     System.out.println("normal day");
                     System.out.println(SumOfHour);
                     System.out.println(nPrice);
@@ -217,9 +222,7 @@ public class StaffPage extends JFrame {
                     price = calculatePrice(SumOfHour, normalPrice);
                     priceTextField.setText(String.valueOf(price));
 
-
-                } 
-                else{
+                } else {
                     System.out.println("weekend day");
                     System.out.println(SumOfHour);
                     System.out.println(wPrice);
@@ -243,7 +246,7 @@ public class StaffPage extends JFrame {
                 } else if (courtInfo == null) {
                     JOptionPane.showMessageDialog(StaffPage.this, "Please select a court.", "Warning",
                             JOptionPane.WARNING_MESSAGE);
-                } else if (DayOfWeek == null){
+                } else if (DayOfWeek == null) {
                     JOptionPane.showMessageDialog(StaffPage.this, "Please select a time to booking.", "Warning",
                             JOptionPane.WARNING_MESSAGE);
                     return;
@@ -256,16 +259,13 @@ public class StaffPage extends JFrame {
                 String userName = parts[1].trim();
 
                 
-                
 
                 if (courtInfo != null) {
-
-                    
 
                     confirmBooking(memberId, userName, courtInfo, price, DayOfWeek, DaysandHoursStrings); // ใช้
                                                                                                           // memberId
                                                                                                           // ที่แยกได้
-                    
+
                 }
             }
         });
@@ -303,18 +303,22 @@ public class StaffPage extends JFrame {
         receiveChangePanel.setBounds(10, 340, 564, 192); // Adjust position and size as needed
         contentPane.add(receiveChangePanel);
         receiveChangePanel.setLayout(new BorderLayout(0, 0));
-
+        
         JTextArea receiveChangeTextArea = new JTextArea();
         receiveChangeTextArea.setEditable(false);
-
-        receiveChangeTextArea.setText("- Field 13, 1 hour, 150 baht\n- Received 200 baht\n- Change 50 baht");
-
+        receiveChangeTextArea.setText(SumOfHour + "- Field 13, 1 hour, 150 baht\n- Received 200 baht\n- Change 50 baht");
+        
         JScrollPane receiveChangeScrollPane = new JScrollPane(receiveChangeTextArea);
         receiveChangePanel.add(receiveChangeScrollPane, BorderLayout.CENTER);
+        
+        
 
+        
+
+        
     }
 
-    private int calculatePrice(int sumOfhour,int totalTime) {
+    private int calculatePrice(int sumOfhour, int totalTime) {
         int x = sumOfhour * totalTime;
         return x;
     }
