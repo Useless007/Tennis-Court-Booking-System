@@ -28,6 +28,7 @@ public class StaffPage extends JFrame {
     public String normalPrice;
     public String weekendPrice;
     public int totalPrice;
+    public int price = 0;
     // ScheduleTable scheduleTable = new ScheduleTable();
     ScheduleMethod ss = new ScheduleMethod();
 
@@ -42,11 +43,9 @@ public class StaffPage extends JFrame {
             String timeslot = part[1].trim();
             this.DaysandHoursStrings = timeslot;
         }
-
         // System.out.println("Received scheduling data: " + daysAndHours + ", " +
         // sumOfDays + ", " + DaysandHoursStrings);
-
-        priceTextField.setText(String.valueOf(daysAndHours));
+        priceTextField.setText(String.valueOf("Please Click the Calculate Price button to calculate"));
 
         // You can update text fields or other UI components here
     }
@@ -135,25 +134,6 @@ public class StaffPage extends JFrame {
         priceTextField.setColumns(10);
 
         JButton btnCalculatePrice = new JButton("Calculate Price");
-        btnCalculatePrice.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                // System.out.println(DayOfWeek);
-                // System.out.println(sumOfDays);
-                // System.out.println(DaysandHoursStrings);
-
-                // String courtInfo = courtList.getSelectedValue(); // Get selected court info
-                // from JList
-                // if (courtInfo != null) {
-                // double price = calculatePrice(courtInfo); // Calculate price
-                // priceTextField.setText(String.valueOf(price)); // Display price
-                // } else {
-                // JOptionPane.showMessageDialog(StaffPage.this, "Please select a court.",
-                // "Warning",
-                // JOptionPane.WARNING_MESSAGE);
-                // }
-            }
-        });
         btnCalculatePrice.setBounds(411, 79, 147, 23);
         contentPane.add(btnCalculatePrice);
 
@@ -220,19 +200,31 @@ public class StaffPage extends JFrame {
 
         btnCalculatePrice.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
+                String courtInfo = courtList.getSelectedValue();
+                String[] courtPrice = courtInfo.split(", ");
+                String nPrice = courtPrice.length > 1 ? courtPrice[1].trim() : "";
+                String wPrice = courtPrice[2].trim();
+
+                Integer normalPrice = Integer.parseInt(nPrice);
+                Integer weekendPrice = Integer.parseInt(wPrice);
                 
                 if (DayOfWeek.equals("Monday") || DayOfWeek.equals("Tuesday") || DayOfWeek.equals("Wednesday") || DayOfWeek.equals("Thursday") || DayOfWeek.equals("Friday")){
                     System.out.println("normal day");
                     System.out.println(SumOfHour);
-                    System.out.println(normalPrice);
-                    
-                    // Integer num = Integer.parseInt(normalPrice);
-                    // totalPrice = num * SumOfHour;
-                    // System.out.println(totalPrice);
+                    System.out.println(nPrice);
+
+                    price = calculatePrice(SumOfHour, normalPrice);
+                    priceTextField.setText(String.valueOf(price));
+
+
                 } 
                 else{
-                    System.out.println("weekends day");
-                    System.out.println(weekendPrice);
+                    System.out.println("weekend day");
+                    System.out.println(SumOfHour);
+                    System.out.println(wPrice);
+                    price = calculatePrice(SumOfHour, weekendPrice);
+                    priceTextField.setText(String.valueOf(price));
                 }
 
             }
@@ -240,37 +232,41 @@ public class StaffPage extends JFrame {
 
         btnConfirmBooking.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
                 String inputText = memberIdTextField.getText();
+                String courtInfo = courtList.getSelectedValue();
 
                 if (inputText.length() == 0) {
                     JOptionPane.showMessageDialog(StaffPage.this, "Please select a member.", "Warning",
                             JOptionPane.WARNING_MESSAGE);
                     return;
+                } else if (courtInfo == null) {
+                    JOptionPane.showMessageDialog(StaffPage.this, "Please select a court.", "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                } else if (DayOfWeek == null){
+                    JOptionPane.showMessageDialog(StaffPage.this, "Please select a time to booking.", "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                } else if (price == 0) {
+                    System.out.println("price 0");
                 }
 
                 String[] parts = inputText.split(", ");
                 String memberId = parts.length > 0 ? parts[0].trim() : ""; // แยกและเลือก memberId
                 String userName = parts[1].trim();
-                // System.out.println("Member ID: " + memberId);
-                // System.out.println(1);
 
-                String courtInfo = courtList.getSelectedValue();
-                String[] courtPrice = courtInfo.split(", ");
-                normalPrice = courtPrice.length > 1 ? courtPrice[1].trim() : "";
-                weekendPrice = courtPrice[2].trim();
+                
+                
 
                 if (courtInfo != null) {
-                    double price = 0;
+
+                    
 
                     confirmBooking(memberId, userName, courtInfo, price, DayOfWeek, DaysandHoursStrings); // ใช้
                                                                                                           // memberId
                                                                                                           // ที่แยกได้
                     
-                } else {
-                    JOptionPane.showMessageDialog(StaffPage.this, "Please select a court.", "Warning",
-                            JOptionPane.WARNING_MESSAGE);
                 }
-
             }
         });
 
@@ -318,11 +314,9 @@ public class StaffPage extends JFrame {
 
     }
 
-    private double calculatePrice(String courtInfo) {
-        // This method calculates the price based on the selected court information
-        // You should add the code to calculate the price based on your logic here
-        // Here, we just return 0 for testing purposes
-        return 0.0;
+    private int calculatePrice(int sumOfhour,int totalTime) {
+        int x = sumOfhour * totalTime;
+        return x;
     }
 
     private void confirmBooking(String memberId, String userName, String courtInfo, double price, String dateBooking,
