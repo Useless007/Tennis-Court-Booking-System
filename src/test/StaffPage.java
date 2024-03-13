@@ -22,17 +22,40 @@ public class StaffPage extends JFrame {
     private JTextField priceTextField;
     private JList<String> userList;
     private JList<String> courtList;
-    private JTextArea receiveChangeTextArea; // Fixed declaration here
-
     public String DayOfWeek;
     public int SumOfHour;
     public String DaysandHoursStrings;
+    public String normalPrice;
+    public String weekendPrice;
+    public int totalPrice;
     public int price = 0;
+
+    // ScheduleTable scheduleTable = new ScheduleTable();
+
+    public void receiveScheduleData(String daysAndHours, int sumOfDays, String DaysandHoursStrings) {
+        // Handle the data here, e.g., update the UI or store the data
+        this.DayOfWeek = daysAndHours;
+        this.SumOfHour = sumOfDays;
+
+        String part[] = DaysandHoursStrings.split(": ", 2);
+
+        if (part.length > 1) {
+            String timeslot = part[1].trim();
+            this.DaysandHoursStrings = timeslot;
+        }
+        // System.out.println("Received scheduling data: " + daysAndHours + ", " +
+        // sumOfDays + ", " + DaysandHoursStrings);
+
+        priceTextField.setText(String.valueOf("Please Click the Calculate Price button to calculate"));
+
+        // You can update text fields or other UI components here
+    }
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
+
                     StaffPage frame = new StaffPage();
                     frame.setVisible(true);
                 } catch (Exception e) {
@@ -43,6 +66,7 @@ public class StaffPage extends JFrame {
     }
 
     public StaffPage() {
+        // scheduleTable.setVisible(false);
         setTitle("Staff Page");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 600, 600); // Adjust frame size as needed
@@ -73,12 +97,15 @@ public class StaffPage extends JFrame {
                             userlistModel.addElement(line);
                         }
                     }
+
                 } catch (IOException ex) {
                     ex.printStackTrace();
                     userlistModel.addElement("Error reading user file");
+
                 }
 
                 userList.setModel(userlistModel);
+
             }
         });
         btnSearch.setBounds(411, 7, 147, 23);
@@ -174,6 +201,7 @@ public class StaffPage extends JFrame {
 
         btnCalculatePrice.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
                 String courtInfo = courtList.getSelectedValue();
                 String[] courtPrice = courtInfo.split(", ");
                 String nPrice = courtPrice.length > 1 ? courtPrice[1].trim() : "";
@@ -190,6 +218,7 @@ public class StaffPage extends JFrame {
 
                     price = calculatePrice(SumOfHour, normalPrice);
                     priceTextField.setText(String.valueOf(price));
+
                 } else {
                     System.out.println("weekend day");
                     System.out.println(SumOfHour);
@@ -197,11 +226,13 @@ public class StaffPage extends JFrame {
                     price = calculatePrice(SumOfHour, weekendPrice);
                     priceTextField.setText(String.valueOf(price));
                 }
+
             }
         });
 
         btnConfirmBooking.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
                 String inputText = memberIdTextField.getText();
                 String courtInfo = courtList.getSelectedValue();
 
@@ -221,13 +252,40 @@ public class StaffPage extends JFrame {
                 }
 
                 String[] parts = inputText.split(", ");
-                String memberId = parts.length > 0 ? parts[0].trim() : "";
+                String memberId = parts.length > 0 ? parts[0].trim() : ""; // แยกและเลือก memberId
                 String userName = parts[1].trim();
 
                 if (courtInfo != null) {
-                    confirmBooking(memberId, userName, courtInfo, price, DayOfWeek, DaysandHoursStrings);
-                    receiveChangeTextArea.setText(displayCourtBookingInfo());
+
+                    confirmBooking(memberId, userName, courtInfo, price, DayOfWeek, DaysandHoursStrings); // ใช้
+                                                                                                          // memberId
+                                                                                                          // ที่แยกได้
+
                 }
+            }
+        });
+
+        btnSearch.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String memberId = memberIdTextField.getText();
+                DefaultListModel<String> userlistModel = new DefaultListModel<>();
+
+                try {
+                    List<String> userLines = Files.readAllLines(Paths.get("user.txt"));
+                    for (String line : userLines) {
+                        if (line.contains(memberId)) {
+                            userlistModel.addElement(line);
+                        }
+                    }
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    userlistModel.addElement("Error reading user file");
+
+                }
+
+                userList.setModel(userlistModel);
+
             }
         });
 
@@ -241,18 +299,40 @@ public class StaffPage extends JFrame {
         contentPane.add(receiveChangePanel);
         receiveChangePanel.setLayout(new BorderLayout(0, 0));
 
-        JScrollPane receiveChangeScrollPane = new JScrollPane();
-        receiveChangePanel.add(receiveChangeScrollPane, BorderLayout.CENTER);
-
-        receiveChangeTextArea = new JTextArea(); // Fixed initialization here
+        JTextArea receiveChangeTextArea = new JTextArea();
         receiveChangeTextArea.setEditable(false);
-        receiveChangeScrollPane.setViewportView(receiveChangeTextArea);
+        receiveChangePanel.add(new JScrollPane(receiveChangeTextArea), BorderLayout.CENTER);
 
-        setVisible(true);
+        // Add ActionListener to btnConfirmBooking to update Receive Change Page
+        btnConfirmBooking.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Extract booking information
+                String inputText = memberIdTextField.getText();
+                String courtInfo = courtList.getSelectedValue();
+
+
+                String[] parts = inputText.split(", ");
+                String memberId = parts.length > 0 ? parts[0].trim() : ""; // แยกและเลือก memberId
+                String userName = parts[1].trim();
+
+                if (courtInfo != null) {
+                    confirmBooking(memberId, userName, courtInfo, price, DayOfWeek, DaysandHoursStrings); // ใช้
+                                                                                                          // memberId
+                                                                                                          // ที่แยกได้
+                    // Update the text in the Receive Change Page
+                    String bookingDetails = "Member ID: " + memberId + "\nMember Name: " + userName + "\nCourt Info: "
+                            + courtInfo
+                            + "\nPrice: " + price + "\nDate Booking: " + DayOfWeek + "\nTime: " + DaysandHoursStrings;
+                    receiveChangeTextArea.setText(bookingDetails);
+                }
+            }
+        });
+
     }
 
     private int calculatePrice(int sumOfhour, int totalTime) {
-        return sumOfhour * totalTime;
+        int x = sumOfhour * totalTime;
+        return x;
     }
 
     private void confirmBooking(String memberId, String userName, String courtInfo, double price, String dateBooking,
@@ -298,14 +378,5 @@ public class StaffPage extends JFrame {
             courtListModel.addElement("Error reading court file");
         }
         courtList.setModel(courtListModel);
-    }
-
-    private String displayCourtBookingInfo() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(SumOfHour).append("- Field 13, 1 hour, 150 baht\n");
-        builder.append("- Received ").append(price).append(" baht\n");
-        int change = price - 150; // Assuming 150 baht is the standard price
-        builder.append("- Change ").append(change).append(" baht");
-        return builder.toString();
     }
 }

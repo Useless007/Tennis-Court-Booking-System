@@ -19,7 +19,7 @@ public class ScheduleTable extends JFrame {
     private final Color clickedColor = Color.YELLOW;
     private final Set<Point> clickedCells = new HashSet<>();
     private final Map<Integer, Set<String>> selectedTimesPerDay = new HashMap<>();
-    private String[] days = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+    private String[] days = {  "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"  };
 
     private String dayString = "";
 
@@ -48,6 +48,7 @@ public class ScheduleTable extends JFrame {
         for (String day : days) {
             model.addRow(new Object[] { day });
             selectedTimesPerDay.put(model.getRowCount() - 1, new TreeSet<>(timeComparator));
+
         }
 
         JTable table = new JTable(model);
@@ -60,6 +61,7 @@ public class ScheduleTable extends JFrame {
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+                   
                     boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 if (column > 0 && clickedCells.contains(new Point(row, column))) {
@@ -93,34 +95,48 @@ public class ScheduleTable extends JFrame {
                         }
                     }
                     // Print and repaint as before
+                        selectedTimesPerDay.get(row).add(times[col]);
+                    }
+                    // Clear selections in other rows
+                    for (final int[] r = new int[1]; r[0] < table.getRowCount(); r[0]++) {
+                        if (r[0] != row) {
+                            clickedCells.removeIf(p -> p.x == r[0]);
+                            selectedTimesPerDay.get(r[0]).clear();
+                        }
+                    }
+                    // Print and repaint as before
                     printSelectedTimesAndTotalHours(row);
+                    table.repaint();
                     table.repaint();
                 }
             }
-        });
+        );
         getContentPane().setLayout(null);
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(0, 0, 1184, 323);
         getContentPane().add(scrollPane);
-
+        
         JButton btnBen10 = new JButton("Selection Time Pick");
 
         btnBen10.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (staffPage != null) {
-                    // Call the receiveScheduleData method in StaffPage
-                    staffPage.receiveScheduleData(dayString, calculateTotalHours(selectedTimesPerDay.get(0)),
-                            selectedTimesPerDay.get(0).toString());
+                    staffPage.receiveScheduleData(scheduleMethod.getDayOfWeekStrings(),
+                                                  scheduleMethod.getSumofDays(),
+                                                  scheduleMethod.getDaysandHoursStrings());
                     dispose();
                 }
             }
         });
+        
+        
 
         btnBen10.setBounds(0, 321, 1184, 23);
         getContentPane().add(btnBen10);
         setVisible(true);
     }
+
 
     private int calculateTotalHours(Set<String> selectedTimes) {
         int totalHours = 0;
@@ -147,10 +163,14 @@ public class ScheduleTable extends JFrame {
 
             String dateString = timesBuilder.toString();
 
-            dayString = days[row];
+
+            scheduleMethod.setDayOfWeekStrings(days[row]);
+            scheduleMethod.setDaysandHoursStrings(dateString);
+
             int totalHours = calculateTotalHours(selectedTimes);
             scheduleMethod.setSumofDays(totalHours); // Sum of days
-            scheduleMethod.setDaysandHoursStrings(dateString);
+            
+
         }
     }
 
@@ -171,4 +191,7 @@ public class ScheduleTable extends JFrame {
             }
         }
     };
-}
+
+    
+
+};
