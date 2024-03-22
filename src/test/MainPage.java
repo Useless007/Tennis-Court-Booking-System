@@ -1,12 +1,9 @@
 package test;
 
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 
 public class MainPage extends JFrame {
 
@@ -14,8 +11,15 @@ public class MainPage extends JFrame {
 	private JPanel contentPane;
 
 	/********************************************
-	 * Launch the application. *
+	 * 			Launch the application. 		*
 	 ********************************************/
+	/**
+	 * เมธอด main นี้เป็นจุดเริ่มต้นของโปรแกรม โดยจะทำการสร้างอินสแตนซ์ของ MainPage
+	 * แล้วทำให้มันแสดงขึ้นมา การสร้างและแสดง MainPage นี้จะทำใน
+	 * EventQueue.invokeLater เพื่อให้แน่ใจว่าทุกอย่างทำงานใน Event Dispatch Thread
+	 * ซึ่งเป็นสิ่งที่จำเป็นสำหรับ Swing หากมีข้อผิดพลาดใดๆ
+	 * จะทำการแสดงรายละเอียดข้อผิดพลาด
+	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -30,13 +34,31 @@ public class MainPage extends JFrame {
 	}
 
 	/********************************************
-	 * end of main *
+	 * 				end of main 				*
 	 ********************************************/
 
 	/**
 	 * Create the frame.
 	 */
 	public MainPage() {
+		/**
+		 * เมธอด MainPage เป็น constructor ของคลาส MainPage
+		 * ทำหน้าที่สร้างหน้าต่างหลักของโปรแกรม โดยตั้งค่าต่างๆ ของหน้าต่าง และสร้างปุ่ม
+		 * 'Admin', 'Staff', 'Owner', และ 'Promotion View' แล้วเพิ่ม ActionListener
+		 * ให้กับแต่ละปุ่ม
+		 * 
+		 * เมื่อผู้ใช้คลิกปุ่ม 'Owner' จะสร้างหน้าต่าง OwnerPage
+		 * แล้วแสดงหน้าต่างนี้ขึ้นมา
+		 * 
+		 * เมื่อผู้ใช้คลิกปุ่ม 'Staff' จะสร้างหน้าต่าง StaffPage
+		 * แล้วแสดงหน้าต่างนี้ขึ้นมา
+		 * 
+		 * เมื่อผู้ใช้คลิกปุ่ม 'Admin' จะสร้างหน้าต่าง AdminPage
+		 * แล้วแสดงหน้าต่างนี้ขึ้นมา
+		 * 
+		 * เมื่อผู้ใช้คลิกปุ่ม 'Promotion View' จะสร้างหน้าต่าง ShowPromotion
+		 * แล้วแสดงหน้าต่างนี้ขึ้นมา
+		 */
 		setResizable(false);
 		setTitle("Select some shit");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
