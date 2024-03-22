@@ -60,21 +60,7 @@ public class StaffPage extends JFrame {
 
         // คุณสามารถอัปเดตช่องข้อความหรือส่วนประกอบ UI อื่นๆ ได้ที่นี่
     }
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    // สร้างและแสดงหน้า StaffPage เมื่อเริ่มโปรแกรม
-                    StaffPage frame = new StaffPage();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
+    
     public StaffPage() {
         // scheduleTable.setVisible(false);
 
