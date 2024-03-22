@@ -178,13 +178,7 @@ public class AdminPage extends JFrame {
         // เพิ่ม JButton ลงในหน้าต่าง
         getContentPane().add(refreshButton);
 
-        // สร้าง JButton ชื่อว่า reportButton และกำหนดข้อความเป็น "Show Report"
-        JButton reportButton = new JButton("Show Report");
-        // กำหนดตำแหน่งของ JButton ที่ตำแหน่ง x=360, y=337, width=120, height=25
-        reportButton.setBounds(360, 337, 120, 25);
-        // เพิ่ม JButton ลงในหน้าต่าง
-        getContentPane().add(reportButton);
-
+        
         // สร้าง JLabel ชื่อว่า lblUserList และกำหนดข้อความเป็น "User List"
         userList.setBounds(31, 243, 324, 148);
         // เพิ่ม JList ลงในหน้าต่าง
@@ -422,21 +416,6 @@ public class AdminPage extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 displayUsers();
                 displayCourts();
-            }
-        });
-
-        reportButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                /**
-                 * เมื่อมีการคลิกที่ปุ่ม reportButton จะทำการสร้าง ActionListener
-                 * ที่จะทำงานตามที่กำหนดในเมธอด actionPerformed ภายในนั้นจะทำการสร้าง dialog
-                 * ใหม่จากคลาส ShowReport และตั้งค่าให้ dialog นี้แสดงอยู่ตรงกลางหน้าจอ
-                 * แล้วทำการแสดง
-                 * dialog นี้
-                 */
-                ShowReport reportDialog = new ShowReport(AdminPage.this);
-                reportDialog.setLocationRelativeTo(null); // Center on screen
-                reportDialog.setVisible(true);
             }
         });
 

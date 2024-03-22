@@ -18,19 +18,6 @@ public class OwnerPage extends JFrame {
     private JPanel contentPane;
     private JTable table;
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    OwnerPage frame = new OwnerPage();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
     public OwnerPage() {
         setTitle("Court Booking List - Owner Page");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);    

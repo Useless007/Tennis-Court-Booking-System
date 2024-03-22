@@ -1,4 +1,4 @@
-package test;
+package notuse;
 JPanel receiveChangePanel = new JPanel();
 receiveChangePanel.setBorder(BorderFactory.createTitledBorder("Receive Change Page"));
 receiveChangePanel.setBounds(10, 340, 564, 192); // Adjust position and size as needed
