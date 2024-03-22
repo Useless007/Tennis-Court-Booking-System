@@ -33,13 +33,21 @@ public class OwnerPage extends JFrame {
 
     public OwnerPage() {
         setTitle("Court Booking List - Owner Page");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);    
+        setResizable(false);
         setBounds(100, 100, 800, 600);
         contentPane = new JPanel();
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout());
 
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // This will make all cells non-editable
+                return false;
+            }
+        };
+
         model.addColumn("Member ID");
         model.addColumn("Member Name");
         model.addColumn("Court Info");
