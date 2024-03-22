@@ -13,7 +13,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
 /**
  * หน้าจอของพนักงาน
  */
@@ -22,8 +21,8 @@ public class StaffPage extends JFrame {
     // สร้างอ็อบเจ็กต์ของคลาส ScheduleMethod เพื่อใช้ในหน้านี้
     ScheduleMethod scheduleMethod = new ScheduleMethod();
 
-  // ประกาศตัวแปรสำหรับองค์ประกอบต่าง ๆ ของหน้านี้
-    private JPanel contentPane;  // ประกาศตัวแปรสำหรับเก็บข้อมูล contentPane
+    // ประกาศตัวแปรสำหรับองค์ประกอบต่าง ๆ ของหน้านี้
+    private JPanel contentPane; // ประกาศตัวแปรสำหรับเก็บข้อมูล contentPane
     private JTextField memberIdTextField; // ประกาศตัวแปรสำหรับเก็บข้อมูล Member ID
     private JTextField bookingTextField; // ประกาศตัวแปรสำหรับเก็บข้อมูลการจอง
     private JTextField priceTextField; // ประกาศตัวแปรสำหรับเก็บข้อมูลราคา
@@ -41,12 +40,13 @@ public class StaffPage extends JFrame {
     // ScheduleTable scheduleTable = new ScheduleTable();
 
     public void receiveScheduleData(String daysAndHours, int sumOfDays, String DaysandHoursStrings) {
-    // จัดการข้อมูลที่ถูกส่งมาจาก ScheduleMethod ที่นี่ เช่น อัปเดต UI หรือจัดเก็บข้อมูล
+        // จัดการข้อมูลที่ถูกส่งมาจาก ScheduleMethod ที่นี่ เช่น อัปเดต UI
+        // หรือจัดเก็บข้อมูล
 
-    // อัปเดตข้อมูลวันและชั่วโมงที่ส่งมา
+        // อัปเดตข้อมูลวันและชั่วโมงที่ส่งมา
         this.DayOfWeek = daysAndHours;
         this.SumOfHour = sumOfDays;
-    // แยกข้อมูลวันและช่วงเวลาออกจากข้อความที่ส่งมา
+        // แยกข้อมูลวันและช่วงเวลาออกจากข้อความที่ส่งมา
         String part[] = DaysandHoursStrings.split(": ", 2);
 
         if (part.length > 1) {
@@ -65,7 +65,7 @@ public class StaffPage extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                     // สร้างและแสดงหน้า StaffPage เมื่อเริ่มโปรแกรม   
+                    // สร้างและแสดงหน้า StaffPage เมื่อเริ่มโปรแกรม
                     StaffPage frame = new StaffPage();
                     frame.setVisible(true);
                 } catch (Exception e) {
@@ -78,9 +78,9 @@ public class StaffPage extends JFrame {
     public StaffPage() {
         // scheduleTable.setVisible(false);
 
-         // กำหนดค่าสำหรับหน้าต่าง StaffPage
+        // กำหนดค่าสำหรับหน้าต่าง StaffPage
         setTitle("Staff Page"); // ตั้งชื่อของหน้าต่าง Staff Page
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  // ปิดหน้าต่างเมื่อปิดหน้าต่าง Staff Page
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // ปิดหน้าต่างเมื่อปิดหน้าต่าง Staff Page
         setBounds(100, 100, 600, 600); // ตั้งขนาดของหน้าต่าง Staff Page (ปรับเป็นตามที่ต้องการ)
         // สร้างและกำหนดลักษณะของ contentPane ของ StaffPage
         contentPane = new JPanel();
@@ -96,14 +96,15 @@ public class StaffPage extends JFrame {
         memberIdTextField = new JTextField();
         memberIdTextField.setBounds(103, 8, 298, 20); // ตำแหน่งของ JTextField ใน contentPane
         contentPane.add(memberIdTextField); // เพิ่ม JTextField ลงใน contentPane
-        memberIdTextField.setColumns(10);  // กำหนดขนาดของ JTextField  
+        memberIdTextField.setColumns(10); // กำหนดขนาดของ JTextField
 
         // เพิ่ม JButton สำหรับค้นหาข้อมูลสมาชิก
         JButton btnSearch = new JButton("Search");
         btnSearch.addActionListener(new ActionListener() { // สร้าง ActionListener สำหรับปุ่มค้นหาข้อมูลสมาชิก
             public void actionPerformed(ActionEvent e) { // สร้างเมธอดที่จะทำงานเมื่อมีการคลิกปุ่มค้นหาข้อมูลสมาชิก
                 String memberId = memberIdTextField.getText();// รับค่า Member ID จาก JTextField
-                DefaultListModel<String> userlistModel = new DefaultListModel<>(); // สร้าง DefaultListModel สำหรับเก็บข้อมูลสมาชิก
+                DefaultListModel<String> userlistModel = new DefaultListModel<>(); // สร้าง DefaultListModel
+                                                                                   // สำหรับเก็บข้อมูลสมาชิก
 
                 try {// ใช้ try-catch เพื่อจัดการข้อผิดพลาดที่อาจเกิดขึ้น
                     List<String> userLines = Files.readAllLines(Paths.get("user.txt"));// อ่านข้อมูลจากไฟล์ user.txt
@@ -115,7 +116,8 @@ public class StaffPage extends JFrame {
 
                 } catch (IOException ex) {// จัดการข้อผิดพลาดที่เกิดขึ้น
                     ex.printStackTrace();// แสดงข้อผิดพลาดที่เกิดขึ้น
-                    userlistModel.addElement("Error reading user file");// แสดงข้อความว่าเกิดข้อผิดพลาดในการอ่านไฟล์ user.txt
+                    userlistModel.addElement("Error reading user file");// แสดงข้อความว่าเกิดข้อผิดพลาดในการอ่านไฟล์
+                                                                        // user.txt
 
                 }
 
@@ -153,13 +155,15 @@ public class StaffPage extends JFrame {
         btnCalculatePrice.setBounds(411, 79, 147, 23);// ตำแหน่งของปุ่มคำนวณราคาใน contentPane
         contentPane.add(btnCalculatePrice); // เพิ่มปุ่มคำนวณราคาลงใน contentPane
 
-        DefaultListModel<String> userlistModel = new DefaultListModel<>();// สร้าง DefaultListModel สำหรับเก็บข้อมูลสมาชิก
+        DefaultListModel<String> userlistModel = new DefaultListModel<>();// สร้าง DefaultListModel
+                                                                          // สำหรับเก็บข้อมูลสมาชิก
         userList = new JList<>(userlistModel);// สร้าง JList สำหรับแสดงข้อมูลสมาชิก
         JScrollPane userlistPane = new JScrollPane(userList); // สร้าง JScrollPane สำหรับแสดงข้อมูลสมาชิก
         userlistPane.setBounds(32, 174, 258, 148); // ตำแหน่งของ JScrollPane ใน contentPane
         contentPane.add(userlistPane); // เพิ่ม JScrollPane ลงใน contentPane
 
-        DefaultListModel<String> courtListModel = new DefaultListModel<>(); // สร้าง DefaultListModel สำหรับเก็บข้อมูลสนาม
+        DefaultListModel<String> courtListModel = new DefaultListModel<>(); // สร้าง DefaultListModel
+                                                                            // สำหรับเก็บข้อมูลสนาม
         courtList = new JList<>(courtListModel); // สร้าง JList สำหรับแสดงข้อมูลสนาม
         JScrollPane courtListPane = new JScrollPane(courtList); // สร้าง JScrollPane สำหรับแสดงข้อมูลสนาม
         courtListPane.setBounds(300, 174, 258, 148); // ตำแหน่งของ JScrollPane ใน contentPane
@@ -169,8 +173,10 @@ public class StaffPage extends JFrame {
         btnSelectTime.setBounds(32, 119, 526, 44); // ตำแหน่งของปุ่มเลือกเวลาที่จะจองใน contentPane
         contentPane.add(btnSelectTime); // เพิ่มปุ่มเลือกเวลาที่จะจองลงใน contentPane
 
-        userList.addMouseListener(new MouseAdapter() { // สร้าง MouseAdapter สำหรับจัดการเมื่อมีการคลิกที่ JList ของสมาชิก
-            @Override // ใช้เมื่อต้องการเขียนเมธอดที่เป็น Override จากคลาสหรืออินเทอร์เฟซที่เราสร้างขึ้น
+        userList.addMouseListener(new MouseAdapter() { // สร้าง MouseAdapter สำหรับจัดการเมื่อมีการคลิกที่ JList
+                                                       // ของสมาชิก
+            @Override // ใช้เมื่อต้องการเขียนเมธอดที่เป็น Override
+                      // จากคลาสหรืออินเทอร์เฟซที่เราสร้างขึ้น
             public void mouseClicked(MouseEvent evt) { // สร้างเมธอดที่จะทำงานเมื่อมีการคลิกที่ JList ของสมาชิก
                 if (evt.getClickCount() == 1) { // ตรวจสอบว่ามีการคลิกเพียง 1 ครั้งหรือไม่
                     String selectedUser = userList.getSelectedValue(); // รับข้อมูลสมาชิกที่ถูกเลือก
@@ -181,7 +187,12 @@ public class StaffPage extends JFrame {
                             String selectedMemberId = parts[0].trim(); // แยกและเลือก Member ID
                             String selectedName = parts[1].trim(); // แยกและเลือกชื่อ
                             String selectedSurname = parts[2].trim();// แยกและเลือกนามสกุล
-                            memberIdTextField.setText(selectedMemberId + ", " + selectedName + " " + selectedSurname); // แสดงข้อมูล Member ID และชื่อ-นามสกุล ใน JTextField
+                            memberIdTextField.setText(selectedMemberId + ", " + selectedName + " " + selectedSurname); // แสดงข้อมูล
+                                                                                                                       // Member
+                                                                                                                       // ID
+                                                                                                                       // และชื่อ-นามสกุล
+                                                                                                                       // ใน
+                                                                                                                       // JTextField
                         }
                     }
                 }
@@ -209,7 +220,8 @@ public class StaffPage extends JFrame {
         // สร้าง ActionListener สำหรับปุ่มเลือกเวลาที่จะจอง
         btnSelectTime.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {// สร้างเมธอดที่จะทำงานเมื่อมีการคลิกปุ่มเลือกเวลาที่จะจอง
-                ScheduleTable s = new ScheduleTable(StaffPage.this);// สร้าง ScheduleTable และส่งค่า StaffPage ไปให้ ScheduleTable
+                ScheduleTable s = new ScheduleTable(StaffPage.this);// สร้าง ScheduleTable และส่งค่า StaffPage ไปให้
+                                                                    // ScheduleTable
                 s.setVisible(true); // แสดง ScheduleTable
             }
         });
@@ -227,17 +239,17 @@ public class StaffPage extends JFrame {
 
                 if (DayOfWeek.equals("Monday") || DayOfWeek.equals("Tuesday") || DayOfWeek.equals("Wednesday") // ตรวจสอบว่าเป็นวันธรรมดาหรือวันหยุด
                         || DayOfWeek.equals("Thursday") || DayOfWeek.equals("Friday")) {// ถ้าเป็นวันธรรมดา
-                    System.out.println("normal day");// แสดงข้อความว่าเป็นวันธรรมดา
-                    System.out.println(SumOfHour);// แสดงจำนวนชั่วโมงที่จอง
-                    System.out.println(nPrice);// แสดงราคาปกติ
+                    // System.out.println("normal day");// แสดงข้อความว่าเป็นวันธรรมดา
+                    // System.out.println(SumOfHour);// แสดงจำนวนชั่วโมงที่จอง
+                    // System.out.println(nPrice);// แสดงราคาปกติ
 
                     price = calculatePrice(SumOfHour, normalPrice);// คำนวณราคา
                     priceTextField.setText(String.valueOf(price));// แสดงราคาใน JTextField
 
                 } else {// ถ้าเป็นวันหยุด
-                    System.out.println("weekend day");// แสดงข้อความว่าเป็นวันหยุด
-                    System.out.println(SumOfHour);// แสดงจำนวนชั่วโมงที่จอง
-                    System.out.println(wPrice);// แสดงราคาวันหยุด
+                    // System.out.println("weekend day");// แสดงข้อความว่าเป็นวันหยุด
+                    // System.out.println(SumOfHour);// แสดงจำนวนชั่วโมงที่จอง
+                    // System.out.println(wPrice);// แสดงราคาวันหยุด
                     price = calculatePrice(SumOfHour, weekendPrice);// คำนวณราคา
                     priceTextField.setText(String.valueOf(price));// แสดงราคาใน JTextField
                 }
@@ -248,7 +260,8 @@ public class StaffPage extends JFrame {
         btnSearch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { // สร้างเมธอดที่จะทำงานเมื่อมีการคลิกปุ่มค้นหาข้อมูลสมาชิก
                 String memberId = memberIdTextField.getText(); // รับค่า Member ID จาก JTextField
-                DefaultListModel<String> userlistModel = new DefaultListModel<>();// สร้าง DefaultListModel สำหรับเก็บข้อมูลสมาชิก
+                DefaultListModel<String> userlistModel = new DefaultListModel<>();// สร้าง DefaultListModel
+                                                                                  // สำหรับเก็บข้อมูลสมาชิก
 
                 try {// ใช้ try-catch เพื่อจัดการข้อผิดพลาดที่อาจเกิดขึ้น
                     List<String> userLines = Files.readAllLines(Paths.get("user.txt"));// อ่านข้อมูลจากไฟล์ user.txt
@@ -260,7 +273,8 @@ public class StaffPage extends JFrame {
                     // แสดงข้อมูลสมาชิกใน JList
                 } catch (IOException ex) {
                     ex.printStackTrace();// แสดงข้อผิดพลาดที่เกิดขึ้น
-                    userlistModel.addElement("Error reading user file");// แสดงข้อความว่าเกิดข้อผิดพลาดในการอ่านไฟล์ user.txt
+                    userlistModel.addElement("Error reading user file");// แสดงข้อความว่าเกิดข้อผิดพลาดในการอ่านไฟล์
+                                                                        // user.txt
 
                 }
                 // กำหนดข้อมูลใน JList ของสมาชิก
@@ -281,7 +295,8 @@ public class StaffPage extends JFrame {
 
         JTextArea receiveChangeTextArea = new JTextArea();// สร้าง JTextArea สำหรับแสดงข้อมูลการจอง
         receiveChangeTextArea.setEditable(false); // กำหนดให้ไม่สามารถแก้ไขข้อมูลใน JTextArea ได้
-        receiveChangePanel.add(new JScrollPane(receiveChangeTextArea), BorderLayout.CENTER); // เพิ่ม JScrollPane ลงใน JPanel
+        receiveChangePanel.add(new JScrollPane(receiveChangeTextArea), BorderLayout.CENTER); // เพิ่ม JScrollPane ลงใน
+                                                                                             // JPanel
 
         // เพิ่ม ActionListener ไปที่ btnConfirmBooking เพื่ออัปเดตหน้ารับการเปลี่ยนแปลง
         btnConfirmBooking.addActionListener(new ActionListener() { // สร้าง ActionListener สำหรับปุ่มยืนยันการจอง
@@ -289,57 +304,67 @@ public class StaffPage extends JFrame {
                 // ดึงข้อมูลการจอง
                 String inputText = memberIdTextField.getText(); // ดึงข้อมูลจาก JTextField ของ Member ID
                 String courtInfo = courtList.getSelectedValue(); // ดึงข้อมูลจาก JList ของสนาม
-
-
+                boolean isOverlapping = false;
                 String[] parts = inputText.split(", "); // แยกข้อมูลสมาชิกออกเป็นส่วนๆ
                 String memberId = parts.length > 0 ? parts[0].trim() : ""; // แยกและเลือก memberId
                 String userName = parts[1].trim(); // แยกและเลือกชื่อสมาชิก
 
-                if (courtInfo != null) {// ตรวจสอบว่าข้อมูลสนามที่ถูกเลือกไม่ใช่ค่าว่าง
-                    confirmBooking(memberId, userName, courtInfo, price, DayOfWeek, DaysandHoursStrings); // ใช้
-                                                                                                          // memberId
-                                                                                                          // ที่แยกได้
-                    // อัปเดตข้อความในหน้ารับการเปลี่ยนแปลง
-                    String bookingDetails = "Member ID: " + memberId + "\nMember Name: " + userName + "\nCourt Info: " // แสดงข้อมูลการจอง
-                            + courtInfo// แสดงข้อมูลการจอง
-                            + "\nPrice: " + price + "\nDate Booking: " + DayOfWeek + "\nTime: " + DaysandHoursStrings; // แสดงข้อมูลการจอง
-                    receiveChangeTextArea.setText(bookingDetails);// แสดงข้อมูลการจองใน JTextArea
+
+                if (!isOverlapping) {
+                    if (courtInfo != null) {// ตรวจสอบว่าข้อมูลสนามที่ถูกเลือกไม่ใช่ค่าว่าง
+                        confirmBooking(memberId, userName, courtInfo, price, DayOfWeek, DaysandHoursStrings); // ใช้
+                                                                                                              // memberId
+                                                                                                              // ที่แยกได้
+                        // อัปเดตข้อความในหน้ารับการเปลี่ยนแปลง
+                        String bookingDetails = "Member ID: " + memberId + "\nMember Name: " + userName
+                                + "\nCourt Info: " // แสดงข้อมูลการจอง
+                                + courtInfo// แสดงข้อมูลการจอง
+                                + "\nPrice: " + price + "\nDate Booking: " + DayOfWeek + "\nTime: "
+                                + DaysandHoursStrings; // แสดงข้อมูลการจอง
+                        receiveChangeTextArea.setText(bookingDetails);// แสดงข้อมูลการจองใน JTextArea
+                    }
                 }
+
             }
         });
 
     }
+
     // สร้างเมธอดสำหรับคำนวณราคา
-    private int calculatePrice(int sumOfhour, int totalTime) { 
+    private int calculatePrice(int sumOfhour, int totalTime) {
         int x = sumOfhour * totalTime; // คำนวณราคาโดยการคูณจำนวนชั่วโมงที่จองด้วยราคาต่อชั่วโมง
         return x; // ส่งค่าราคาที่คำนวณได้กลับ
     }
+
     // สร้างเมธอดสำหรับยืนยันการจอง
     private void confirmBooking(String memberId, String userName, String courtInfo, double price, String dateBooking, // สร้างเมธอดสำหรับยืนยันการจอง
             String timeBooking) {// สร้างเมธอดสำหรับยืนยันการจอง
         String bookingInfo = "Member ID: " + memberId + "\nMember Name: " + userName + "\nCourt Info: " + courtInfo // สร้างข้อมูลการจอง
                 + "\nPrice: " + price + "\nDate Booking: " + dateBooking + "\nTime: " + timeBooking; // สร้างข้อมูลการจอง
-                
-        JOptionPane.showMessageDialog(this, "Booking confirmed!\n" + bookingInfo, "Confirmation",// แสดงข้อความยืนยันการจอง
+
+        JOptionPane.showMessageDialog(this, "Booking confirmed!\n" + bookingInfo, "Confirmation", // แสดงข้อความยืนยันการจอง
                 JOptionPane.INFORMATION_MESSAGE);//// ส่งค่าราคาที่คำนวณได้กลับ
 
         try {// ใช้ try-catch เพื่อจัดการข้อผิดพลาดที่อาจเกิดขึ้น
-            FileWriter writer = new FileWriter("courtbooking.txt", true); // สร้าง FileWriter สำหรับเขียนข้อมูลการจองลงในไฟล์
+            FileWriter writer = new FileWriter("courtbooking.txt", true); // สร้าง FileWriter
+                                                                          // สำหรับเขียนข้อมูลการจองลงในไฟล์
             writer.write(bookingInfo + "\n"); // เขียนข้อมูลการจองลงในไฟล์
             writer.close(); // ปิด FileWriter
         } catch (IOException ex) { // จัดการข้อผิดพลาดที่เกิดขึ้น
             ex.printStackTrace();// แสดงข้อผิดพลาดที่เกิดขึ้น
         }
     }
+
     // สร้างเมธอดสำหรับแสดงข้อมูลสมาชิก
     private void displayUsers() {
-        DefaultListModel<String> userlistModel = new DefaultListModel<>(); // สร้าง DefaultListModel สำหรับเก็บข้อมูลสมาชิก
+        DefaultListModel<String> userlistModel = new DefaultListModel<>(); // สร้าง DefaultListModel
+                                                                           // สำหรับเก็บข้อมูลสมาชิก
         try {// ใช้ try-catch เพื่อจัดการข้อผิดพลาดที่อาจเกิดขึ้น
             List<String> lines = Files.readAllLines(Paths.get("user.txt")); // อ่านข้อมูลจากไฟล์ user.txt
             // วนลูปผ่านทุกบรรทัดของไฟล์และเพิ่มข้อมูลเข้าใน userlistModel
             for (String line : lines) {
                 userlistModel.addElement(line);
-            }// คำนวณเสร็จสิ้นของการอ่านและเพิ่มข้อมูล
+            } // คำนวณเสร็จสิ้นของการอ่านและเพิ่มข้อมูล
         } catch (IOException ex) {
             // จัดการข้อผิดพลาดที่เกิดขึ้นในกรณีที่เกิดข้อผิดพลาดในการอ่านไฟล์
             ex.printStackTrace(); // แสดงข้อผิดพลาดที่เกิดขึ้น
@@ -347,9 +372,11 @@ public class StaffPage extends JFrame {
         }
         userList.setModel(userlistModel);// กำหนดข้อมูลใน JList ของสมาชิก
     }
+
     // สร้างเมธอดสำหรับแสดงข้อมูลสนาม
     private void displayCourts() {
-        DefaultListModel<String> courtListModel = new DefaultListModel<>();// สร้าง DefaultListModel สำหรับเก็บข้อมูลสนาม
+        DefaultListModel<String> courtListModel = new DefaultListModel<>();// สร้าง DefaultListModel
+                                                                           // สำหรับเก็บข้อมูลสนาม
         try {// ใช้ try-catch เพื่อจัดการข้อผิดพลาดที่อาจเกิดขึ้น
             List<String> lines = Files.readAllLines(Paths.get("courtList.txt")); // อ่านข้อมูลจากไฟล์ courtList.txt
             for (String line : lines) { // วนลูปผ่านทุกบรรทัดของไฟล์และเพิ่มข้อมูลเข้าใน courtListModel
@@ -357,8 +384,9 @@ public class StaffPage extends JFrame {
             }
         } catch (IOException ex) {// จัดการข้อผิดพลาดที่เกิดขึ้นในกรณีที่เกิดข้อผิดพลาดในการอ่านไฟล์
             ex.printStackTrace();// แสดงข้อผิดพลาดที่เกิดขึ้น
-            courtListModel.addElement("Error reading court file"); // แสดงข้อความว่าเกิดข้อผิดพลาดในการอ่านไฟล์ courtList.txt
-        }// คำนวณเสร็จสิ้นของการอ่านและเพิ่มข้อมูล
+            courtListModel.addElement("Error reading court file"); // แสดงข้อความว่าเกิดข้อผิดพลาดในการอ่านไฟล์
+                                                                   // courtList.txt
+        } // คำนวณเสร็จสิ้นของการอ่านและเพิ่มข้อมูล
         courtList.setModel(courtListModel);// กำหนดข้อมูลใน JList ของสนาม
     }
 }

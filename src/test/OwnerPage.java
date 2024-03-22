@@ -9,20 +9,6 @@ import java.io.IOException;
 public class OwnerPage extends JFrame {
     
     private JPanel contentPane;
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() { 
-            public void run() {
-                try {
-                    // สร้างและแสดงหน้าต่างของ OwnerPage
-                    OwnerPage frame = new OwnerPage(); // สร้างหน้าต่างของ OwnerPage
-                    frame.setVisible(true);// แสดงหน้าต่างของ OwnerPage
-                } catch (Exception e) { // ถ้าเกิดข้อผิดพลาด
-                    e.printStackTrace(); // แสดงข้อผิดพลาด
-                }
-            }
-        });
-    }
     // สร้างหน้าต่างของ OwnerPage
     public OwnerPage() {
         setTitle("Court Booking List - Owner Page");// ตั้งชื่อหน้าต่าง

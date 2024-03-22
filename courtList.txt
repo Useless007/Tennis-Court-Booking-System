@@ -2,3 +2,4 @@ Batminton1, 120, 100
 Batminton2, 120, 100
 Batminton3, 200, 150
 Batminton4, 1000000, 1
+test, 200, 100
