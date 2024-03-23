@@ -20,7 +20,7 @@ public class OwnerPage extends JFrame {
 
     public OwnerPage() {
         setTitle("Court Booking List - Owner Page");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);    
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
         setBounds(100, 100, 800, 600);
         contentPane = new JPanel();
@@ -62,6 +62,10 @@ public class OwnerPage extends JFrame {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < model.getColumnCount(); i++) {
+            /**
+             * โค้ดนี้ทำการตั้งค่า CellRenderer
+             * ให้กับทุกคอลัมน์ในตารางเพื่อกำหนดการแสดงผลของข้อมูลในแต่ละเซลล์.
+             */
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
 
@@ -109,6 +113,12 @@ public class OwnerPage extends JFrame {
     }
 
     private void loadDataFromFile(DefaultTableModel model) {
+        /**
+         * เมธอด loadDataFromFile ทำการอ่านข้อมูลจากไฟล์ "courtbooking.txt"
+         * และเพิ่มข้อมูลลงในตาราง (DefaultTableModel). ข้อมูลที่อ่านมาจะถูกแยกด้วย ": "
+         * และเก็บลงในตัวแปรที่เกี่ยวข้อง.
+         * ข้อมูลทั้งหมดจะถูกเพิ่มเป็นแถวใหม่ในตารางเมื่อพบ key คือ "Time"
+         */
         try (BufferedReader br = new BufferedReader(new FileReader("courtbooking.txt"))) {
             String memberId = "";
             String memberName = "";
@@ -132,7 +142,7 @@ public class OwnerPage extends JFrame {
                         dateBooking = data[1];
                     } else if (data[0].equals("Time")) {
                         time = data[1];
-                        model.addRow(new String[]{memberId, memberName, courtInfo, price, dateBooking, time});
+                        model.addRow(new String[] { memberId, memberName, courtInfo, price, dateBooking, time });
                     }
                 }
             }
@@ -151,6 +161,10 @@ public class OwnerPage extends JFrame {
     }
 
     private void calculatePrice() {
+        /**
+         * เมธอด calculatePrice ทำการคำนวณราคารวมจากข้อมูลในตาราง แล้วแสดงผลลัพธ์ที่
+         * JTextField ที่อยู่ด้านบนของหน้าต่าง.
+         */
         int rowCount = table.getRowCount();
         double totalPrice = 0;
 
@@ -162,5 +176,15 @@ public class OwnerPage extends JFrame {
         JTextField totalPriceField = (JTextField) ((BorderLayout) contentPane.getLayout())
                 .getLayoutComponent(BorderLayout.NORTH);
         totalPriceField.setText("Total net profit: " + totalPrice + " baht");
+        /**
+         * รับจำนวนแถวทั้งหมดในตาราง
+         * สร้างตัวแปร totalPrice เพื่อเก็บราคารวม
+         * วนลูปผ่านทุกแถวในตาราง, แปลงข้อมูลในคอลัมน์ที่ 3 (ราคา) เป็น double
+         * แล้วเพิ่มเข้าไปใน totalPrice
+         * รับออบเจ็กต์ JTextField ที่อยู่ทางด้านบนของ contentPane (ที่มี layout เป็น
+         * BorderLayout)
+         * ตั้งข้อความของ totalPriceField เป็น "Total net profit: " ตามด้วย totalPrice
+         * และ " baht"
+         */
     }
 }

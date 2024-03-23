@@ -1,42 +1,12 @@
-Member ID: 6606021420084
-Member Name: Hee Men
-Court Info: Batminton1, 120, 100
-Price: 360.0
+Member ID: 6606021420090
+Member Name: jintap awda
+Court Info: Tennis2, 201, 101
+Price: 603.0
 Date Booking: Monday
-Time: [6:00 - 7:00, 7:00 - 8:00, 8:00 - 9:00]
-Member ID: 6606021420084
-Member Name: Hee Men
-Court Info: Batminton1, 120, 100
-Price: 360.0
-Date Booking: Monday
-Time: [6:00 - 7:00, 7:00 - 8:00, 8:00 - 9:00]
-Member ID: 6606021420085
-Member Name: Kuy Yai
-Court Info: Batminton1, 120, 100
-Price: 360.0
-Date Booking: Monday
-Time: [6:00 - 7:00, 7:00 - 8:00, 8:00 - 9:00]
-Member ID: 6606021420085
-Member Name: Kuy Yai
-Court Info: Batminton1, 120, 100
-Price: 360.0
-Date Booking: Monday
-Time: [6:00 - 7:00, 7:00 - 8:00, 8:00 - 9:00]
-Member ID: 6606021420085
-Member Name: Kuy Yai
-Court Info: Batminton1, 120, 100
-Price: 360.0
-Date Booking: Monday
-Time: [6:00 - 7:00, 7:00 - 8:00, 8:00 - 9:00]
-Member ID: 6606021420085
-Member Name: Kuy Yai
-Court Info: Batminton1, 120, 100
-Price: 240.0
-Date Booking: Monday
-Time: [6:00 - 7:00, 7:00 - 8:00]
-Member ID: 6606021420084
-Member Name: Hee Men
-Court Info: Batminton1, 120, 100
-Price: 120.0
-Date Booking: Monday
-Time: [6:00 - 7:00]
+Time: [7:00 - 8:00, 8:00 - 9:00, 9:00 - 10:00]
+Member ID: 6606021420090
+Member Name: jintap awda
+Court Info: Tennis2, 201, 101
+Price: 603.0
+Date Booking: Thursday
+Time: [7:00 - 8:00, 8:00 - 9:00, 9:00 - 10:00]
