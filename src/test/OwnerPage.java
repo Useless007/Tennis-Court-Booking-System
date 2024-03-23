@@ -20,7 +20,7 @@ public class OwnerPage extends JFrame {
 
     public OwnerPage() {
         setTitle("Court Booking List - Owner Page");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);    
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
         setBounds(100, 100, 800, 600);
         contentPane = new JPanel();
@@ -30,7 +30,6 @@ public class OwnerPage extends JFrame {
         DefaultTableModel model = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                // This will make all cells non-editable
                 return false;
             }
         };
@@ -47,7 +46,7 @@ public class OwnerPage extends JFrame {
         table = new JTable(model);
         table.setBackground(Color.WHITE);
         table.setForeground(Color.BLACK);
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Allow only single row selection
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         JTableHeader header = table.getTableHeader();
         header.setBackground(Color.BLUE);
@@ -94,7 +93,6 @@ public class OwnerPage extends JFrame {
         contentPane.add(buttonPanel, BorderLayout.SOUTH);
         contentPane.add(totalPriceField, BorderLayout.NORTH);
 
-        // Double-click event handling
         table.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -132,7 +130,7 @@ public class OwnerPage extends JFrame {
                         dateBooking = data[1];
                     } else if (data[0].equals("Time")) {
                         time = data[1];
-                        model.addRow(new String[]{memberId, memberName, courtInfo, price, dateBooking, time});
+                        model.addRow(new String[] { memberId, memberName, courtInfo, price, dateBooking, time });
                     }
                 }
             }
@@ -142,11 +140,9 @@ public class OwnerPage extends JFrame {
     }
 
     private void refreshData(DefaultTableModel model) {
-        // Clear existing data
         while (model.getRowCount() > 0) {
             model.removeRow(0);
         }
-        // Load data again from file
         loadDataFromFile(model);
     }
 
